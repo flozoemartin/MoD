@@ -2,12 +2,12 @@
 *                                                                                                                                                         *
 *                                                                                                                                                         *
 *                                                                                                                                                         *
-*	            Mode of delivery on sexual health outcomes using ALSPAC - Data Cleaning                                                                 *
-*	                                                                                                                                                    *
-*	            Author: Florence Martin (Epidemiology, MSc)                                                                                             *
+*	            Mode of delivery on sexual health outcomes using ALSPAC - Data Cleaning                                                                     *
+*	                                                                                                                                                        *
+*	            Author: Florence Martin (Epidemiology, MSc)                                                                                                 *
 *                                                                                                                                                         *
-*	            Date started: 22/06/2020                                                                                                                *
-*                 Date finished: 07/07/2020                                                                                                               *
+*	            Date started: 22/06/2020                                                                                                                    *
+*             Date finished: 07/07/2020                                                                                                                   *
 *                                                                                                                                                         *
 *                                                                                                                                                         *
 ***********************************************************************************************************************************************************
