@@ -1,16 +1,16 @@
-*****************************************************************************************************************************************************************
-*                                                                                                                                                               *
-*                                                                                                                                                               *
-*                                                                                                                                                               *
-*	            Mode of delivery on sexual health outcomes using ALSPAC - Data Cleaning                                                                           *
-*	                                                                                                                                                              *
-*	            Author:			Florence Martin (Epidemiology, MSc)                                                                                                   *
-*                                                                                                                                                               *
-*	            Date started:	  22/06/2020                                                                                                                        *
-*             Date finished:  07/07/2020                                                                                                                        *
-*                                                                                                                                                               *
-*                                                                                                                                                               *
-*****************************************************************************************************************************************************************
+***********************************************************************************************************************************************************
+*                                                                                                                                                         *
+*                                                                                                                                                         *
+*                                                                                                                                                         *
+*	            Mode of delivery on sexual health outcomes using ALSPAC - Data Cleaning                                                                 *
+*	                                                                                                                                                    *
+*	            Author: Florence Martin (Epidemiology, MSc)                                                                                             *
+*                                                                                                                                                         *
+*	            Date started: 22/06/2020                                                                                                                *
+*                 Date finished: 07/07/2020                                                                                                               *
+*                                                                                                                                                         *
+*                                                                                                                                                         *
+***********************************************************************************************************************************************************
 
 cd "/Users/ti19522/Documents/Documents - IT047379"
 use Forbes_22June20.dta, clear
@@ -42,7 +42,7 @@ rename mz028a matage_lmp
 rename mz028b matage_delivery
 rename mz028c matage_oneyr
 rename mz028d matage_twoyr
-rename mz028e matage_threeyr
+rename mz028e matage_threeyr 
 rename mz050 apip
 rename mz052 clasp
 rename mz053 thermo
