@@ -9,7 +9,7 @@
 *                                                                                                                      *
 ************************************************************************************************************************
 
-cd "/Users/ti19522/Documents/Documents - IT047379"
+cd "/Users/ti19522/OneDrive - University of Bristol/Documents/PhD/Year 1/ALSPAC MoD Study"
 use Forbes_22June20.dta, clear
 
 * Firstly, I need to change all the variable names to something that is more
