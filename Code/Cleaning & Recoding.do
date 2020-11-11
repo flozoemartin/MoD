@@ -1666,4 +1666,14 @@ label define pain_bin_lb 0"No pain elsewhere" 1"Pain elsewhere"
 label values pain_bin pain_bin_lab
 tab pain_bin
 
+* Dichotomous variable for the presence of episiotomy or perineal tear
+
+tab epis tear
+generate epis_tear = 1 if epis ==1 | tear ==1
+replace epis_tear = 0 if epis ==0 & tear ==0
+tab epis_tear
+label define epis_ear_lb 0"No episiotomy or perineal tear" 1"Episiotomy or perineal tear"
+label values epis_tear epis_tear_lb
+tab epis_tear
+
 save flo_dataset.dta, replace
