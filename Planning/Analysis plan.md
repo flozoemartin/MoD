@@ -20,7 +20,7 @@ Having described the women in the delivery groups, I will then move onto using o
 - [ ] Re-pull the dataset including variable stratifying type of caesarean section
 
 ### Section 2 - Analysing the data
-- [ ] Run ordinal logistic regression models for crude & adjusted (for maternal age & BMI, anxiety & depression) models
+- [ ] Run ordinal logistic regression models for crude & adjusted (for maternal age & BMI, parity, anxiety & depression) models
   - Vaginal delivery vs caesarean section for outcomes at each timepoint
   - Instrumental vs non-instrumental vaginal for outcomes at each timepoint
   - Elective vs emergency caesarean section for outcomes at each timepoint (if N high enough)
