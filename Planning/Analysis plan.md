@@ -15,4 +15,14 @@ Having described the women in the delivery groups, I will then move onto using o
 ### Section 1 - Preparing & cleaning the data
 - [x] Check the cleaning & recoding script from Jun/Jul '20
 - [x] Condense the regressions for each time-point into loops
-- 
+- [ ] Decide on who to include at each time-point & which time-points to include
+- [ ] Decide how to lay out characteristics for whom
+- [ ] Re-pull the dataset including variable stratifying type of caesarean section
+
+### Section 2 - Analysing the data
+- [ ] Run ordinal logistic regression models for crude & adjusted (for maternal age & BMI, anxiety & depression) models
+  - Vaginal delivery vs caesarean section for outcomes at each timepoint
+  - Instrumental vs non-instrumental vaginal for outcomes at each timepoint
+  - Elective vs emergency caesarean section for outcomes at each timepoint (if N high enough)
+- [ ] Develop imputation model & run
+- [ ] Perform sensitivity analysis for excluded mother's
