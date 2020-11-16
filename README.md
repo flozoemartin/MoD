@@ -20,7 +20,7 @@ Pain will explored as a secondary outcome, as well as in the context of the long
 1. Extract & clean the questionnaire & clincal data from mum's enrolled in ALSPAC & derive variables
 2. Explore types of exposure & outcome at each timepoint
 3. Provide participant characteristics for covariates across timepoints in each delivery group
-4. Create longitdinal models for each sexual outcome
+4. Create longitudinal models for each sexual outcome
 5. Perform logistic regression to generate odds for enjoying sex in each delivery group and ordinal logistic regression for sexual frequency
 6. Develop an imputation model to deal with the missing data present in the cohort
 
