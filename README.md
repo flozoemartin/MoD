@@ -12,17 +12,16 @@ Sexual health is an important part of a person's wellbeing, including women of c
 Current evidence has been derived using short follow-up times or cross-sectional study designs in the immediate post-partum period, limiting our ability to be able to distinguish between the transient and permanent effects of childbirth on sexual outcomes. The focus on sexual pain in the absence of other outcomes also leaves questions surrounding enjoyment of sex unanswered in the literature.
 
 # Aims & Objectives 
-This project will first aim to use longitudinal models to understand the trajectories of sexual enjoyment and frequency over time (between 33 months and 18 years). These trajectories will then be considered in the context of different delivery groups, to further understand the relationship of mode of delivery and sexual outcomes over time postpartum. Mode of delivery will be stratified by vaginal delivery and caesarean section; vaginal delivery will then be further stratified into instrumental and non-instrumental & episiotomy and tear. Caesarean section will be further stratified into emergency and elective.
+This project will first describe the participant characteristics of the women in ALSPAC with mode of delivery data at 33 months postpartum. Participant characteristics will also be described for mum's at 18 years postpartum to compare non-responders. Each outcome (sexual frequency & satisfaction) will then be described using ordinal logistic regression (crude & adjusted), for each timepoint where they are both available, in complete cases. Exposures compared: vaginal delivery vs caesarean section, instrumental delivery vs non-instrumental and elective vs emergency caesarean. Utilise methods of dealing with missing data to mitigate the bias that is created by relying on a complete case analysis. 
 
-Pain will explored as a secondary outcome, as well as in the context of the longitudinal models. This project will utilise ordinal logistic regression and multiple imputation to deal with missing data in this cohort.
+Explore sexual pain in the vagina during sex and elsewhere after sex (11 years postpartum) for each of these exposure comparisons. Again, utilise ordinal logistic regression to maintain the richeness of the categorical data for this outcome.
 
 # Methods
 1. Extract & clean the questionnaire & clincal data from mum's enrolled in ALSPAC & derive variables
 2. Explore types of exposure & outcome at each timepoint
 3. Provide participant characteristics for covariates across timepoints in each delivery group
-4. Create longitudinal models for each sexual outcome
-5. Perform logistic regression to generate odds for enjoying sex in each delivery group and ordinal logistic regression for sexual frequency
-6. Develop an imputation model to deal with the missing data present in the cohort
+4. Perform ordinal logistic regression to generate odds for enjoying sex and for sexual frequency in each delivery group 
+5. Develop an imputation model to deal with the missing data present in the cohort
 
 # Keywords
 Childbirth, mode of delivery, caesarean section, sexual satisfaction, sexual frequency, dyspareunia
