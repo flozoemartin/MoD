@@ -5,18 +5,19 @@
 *                                                                                                                      *
 *    Author: Flo Martin                                                                                                *
 *    Date started: 22/06/2020                                                                                          *
-*    Date finished: 07/07/2020                                                                                         *
+*    Date finished: 02/12/2020                                                                                         *
 *                                                                                                                      *
 ************************************************************************************************************************
 
-cd "/Users/ti19522/OneDrive - University of Bristol/Documents/PhD/Year 1/ALSPAC MoD Study"
-use Forbes_22June20.dta, clear
+cd "/Users/ti19522/OneDrive - University of Bristol/Documents/PhD/Year 1/ALSPAC MoD Study/Data"
+use flo_16nov20.dta, clear
 
 * Firstly, I need to change all the variable names to something that is more
 * recognisable for the analysis
 
 rename kz011b alive_1yr
 rename kz021 child_sex
+rename kz030 pref_bw
 rename mz010a preg_size
 rename mz005a mt1preg_alspac
 rename mz010 preg_size_2
@@ -39,18 +40,28 @@ rename mz028a matage_lmp
 rename mz028b matage_delivery
 rename mz028c matage_oneyr
 rename mz028d matage_twoyr
-rename mz028e matage_threeyr 
+rename mz028e matage_threeyr
 rename mz050 apip
 rename mz052 clasp
 rename mz053 thermo
+rename a006 home_owner
+rename a525 marital_status
 rename kb280 duration_bf_6mo
 rename kc404 duration_bf_1yr
 rename b032 parity_18wkgest
 rename b351 cc_anxiety_18wkgest
 rename b353 cc_depress_18wkgest
 rename b370 epds_18wkgest
+rename b650 ever_smoker
+rename b663 reg_smoker_prepreg
+rename b665 reg_smoker_t1
+rename b667 reg_smoker_last2weeks
 rename c645 mat_edu
 rename c645a mat_edu_2
+rename c755 mat_social_class
+rename c765 pat_social_class
+rename c800 ethnic_group
+rename c801 ptnrs_ethnic_group
 rename c802 mat_ethn
 rename dw042 mat_bmi
 rename e326 aduse_cat_8wk
@@ -100,6 +111,7 @@ rename HDP hdp
 rename DEL_P1410 epis
 rename DEL_P1412 tear
 rename DEL_P1473 tearepis_infection
+rename DEL_P1212 caesarean
 rename p1230 sexfreq_9yr
 rename p1231 sexsat_9yr
 rename p1290 mat_wtkg_9yr
@@ -609,7 +621,7 @@ tab sexsat_33mo
 tab sexsat_33mo, nolabel
 recode sexsat_33mo (-1=.) (1=4) (2=3) (3=2) (4=1) (5=0)
 label define sexsat_33mo_lb 0"No sex at the moment" 1"No, not at all" ///
-2"No,not a lot" 3"Yes, somewhat" 4"Yes, very much"
+2"No, not a lot" 3"Yes, somewhat" 4"Yes, very much"
 label values sexsat_33mo sexsat_33mo_lb
 tab sexsat_33mo
 
@@ -956,9 +968,9 @@ tab dyspareunia_11yr
 
 tab pain_elsewhere_11yr
 tab pain_elsewhere_11yr, nolabel
-recode pain_elsewhere_11yr (-10=.) (-1=.) (0=.) (1=0) (2=1) (3=2) (4=3) (5=4)
-label define pain_elsewhere_11yr_lb 0"Never" 1"Occasionally" 2"Often" 3"Always" ///
-4"Don't have sex"
+recode pain_elsewhere_11yr (-10=.) (-1=.) (0=.) (1=1) (2=2) (3=3) (4=4) (5=0)
+label define pain_elsewhere_11yr_lb 0"Don't have sex" 1"Never" 2"Occasionally" 3"Often" 4"Always" ///
+
 label values pain_elsewhere_11yr pain_elsewhere_11yr_lb
 tab pain_elsewhere_11yr
 
@@ -1131,11 +1143,6 @@ tab mat_htcm_2010
 tab mat_htcm_2010, nolabel
 recode mat_htcm_2010 (-10=.) (-1=.)
 
-* Maternal height and weight from FOM1 (?)
-
-tab fm1ms100
-tab fm1ms110, nolabel
-recode fm1ms110 (-10=.) (-1=.)
 
 * The best gestation we can get - length of pregnancy in weeks
 
@@ -1428,45 +1435,45 @@ label variable sexsat_partbin_12yr"Sexual satisfaction with partner at 12 years 
 * (0)
 
 tab sexfreq_21mo
-generate sexfreq_21mo_bin = 1 if sexfreq_21mo ==3 | sexfreq_21mo ==4 | sexfreq_21mo ==5
-replace sexfreq_21mo_bin = 0 if sexfreq_21mo ==0 | sexfreq_21mo ==1 | sexfreq_21mo ==2
-tab sexfreq_21mo_bin
-label variable sexfreq_21mo_bin"More or less than once a week at 21 months"
+generate sexfreq_bin_21mo = 1 if sexfreq_21mo ==3 | sexfreq_21mo ==4 | sexfreq_21mo ==5
+replace sexfreq_bin_21mo = 0 if sexfreq_21mo ==0 | sexfreq_21mo ==1 | sexfreq_21mo ==2
+tab sexfreq_bin_21mo
+label variable sexfreq_bin_21mo"More or less than once a week at 21 months"
 
-generate sexfreq_33mo_bin = 1 if sexfreq_33mo ==3 | sexfreq_33mo ==4 | sexfreq_33mo ==5
-replace sexfreq_33mo_bin = 0 if sexfreq_33mo ==0 | sexfreq_33mo ==1 | sexfreq_33mo ==2
-tab sexfreq_33mo_bin
-label variable sexfreq_33mo_bin"More or less than once a week at 33 months"
+generate sexfreq_bin_33mo = 1 if sexfreq_33mo ==3 | sexfreq_33mo ==4 | sexfreq_33mo ==5
+replace sexfreq_bin_33mo = 0 if sexfreq_33mo ==0 | sexfreq_33mo ==1 | sexfreq_33mo ==2
+tab sexfreq_bin_33mo
+label variable sexfreq_bin_33mo"More or less than once a week at 33 months"
 
-generate sexfreq_47mo_bin = 1 if sexfreq_47mo ==3 | sexfreq_47mo ==4 | sexfreq_47mo ==5
-replace sexfreq_47mo_bin = 0 if sexfreq_47mo ==0 | sexfreq_47mo ==1 | sexfreq_47mo ==2
-tab sexfreq_47mo_bin
-label variable sexfreq_47mo_bin"More or less than once a week at 47 months"
+generate sexfreq_bin_47mo = 1 if sexfreq_47mo ==3 | sexfreq_47mo ==4 | sexfreq_47mo ==5
+replace sexfreq_bin_47mo = 0 if sexfreq_47mo ==0 | sexfreq_47mo ==1 | sexfreq_47mo ==2
+tab sexfreq_bin_47mo
+label variable sexfreq_bin_47mo"More or less than once a week at 47 months"
 
-generate sexfreq_5yr_bin = 1 if sexfreq_5yr ==3 | sexfreq_5yr ==4 | sexfreq_5yr ==5
-replace sexfreq_5yr_bin = 0 if sexfreq_5yr ==0 | sexfreq_5yr ==1 | sexfreq_5yr ==2
-tab sexfreq_5yr_bin
-label variable sexfreq_5yr_bin"More or less than once a week at 5 years"
+generate sexfreq_bin_5yr = 1 if sexfreq_5yr ==3 | sexfreq_5yr ==4 | sexfreq_5yr ==5
+replace sexfreq_bin_5yr = 0 if sexfreq_5yr ==0 | sexfreq_5yr ==1 | sexfreq_5yr ==2
+tab sexfreq_bin_5yr
+label variable sexfreq_bin_5yr"More or less than once a week at 5 years"
 
-generate sexfreq_6yr_bin = 1 if sexfreq_6yr ==3 | sexfreq_6yr ==4 | sexfreq_6yr ==5
-replace sexfreq_6yr_bin = 0 if sexfreq_6yr ==0 | sexfreq_6yr ==1 | sexfreq_6yr ==2
-tab sexfreq_6yr_bin
-label variable sexfreq_6yr_bin"More or less than once a week at 6 years"
+generate sexfreq_bin_6yr = 1 if sexfreq_6yr ==3 | sexfreq_6yr ==4 | sexfreq_6yr ==5
+replace sexfreq_bin_6yr = 0 if sexfreq_6yr ==0 | sexfreq_6yr ==1 | sexfreq_6yr ==2
+tab sexfreq_bin_6yr
+label variable sexfreq_bin_6yr"More or less than once a week at 6 years"
 
-generate sexfreq_9yr_bin = 1 if sexfreq_9yr ==3 | sexfreq_9yr ==4 | sexfreq_9yr ==5
-replace sexfreq_9yr_bin = 0 if sexfreq_9yr ==0 | sexfreq_9yr ==1 | sexfreq_9yr ==2
-tab sexfreq_9yr_bin
-label variable sexfreq_9yr_bin"More or less than once a week at 9 years"
+generate sexfreq_bin_9yr = 1 if sexfreq_9yr ==3 | sexfreq_9yr ==4 | sexfreq_9yr ==5
+replace sexfreq_bin_9yr = 0 if sexfreq_9yr ==0 | sexfreq_9yr ==1 | sexfreq_9yr ==2
+tab sexfreq_bin_9yr
+label variable sexfreq_bin_9yr"More or less than once a week at 9 years"
 
-generate sexfreq_12yr_bin = 1 if sexfreq_12yr ==3 | sexfreq_12yr ==4 | sexfreq_12yr ==5
-replace sexfreq_12yr_bin = 0 if sexfreq_12yr ==0 | sexfreq_12yr ==1 | sexfreq_12yr ==2
-tab sexfreq_12yr_bin
-label variable sexfreq_12yr_bin"More or less than once a week at 12 years"
+generate sexfreq_bin_12yr = 1 if sexfreq_12yr ==3 | sexfreq_12yr ==4 | sexfreq_12yr ==5
+replace sexfreq_bin_12yr = 0 if sexfreq_12yr ==0 | sexfreq_12yr ==1 | sexfreq_12yr ==2
+tab sexfreq_bin_12yr
+label variable sexfreq_bin_12yr"More or less than once a week at 12 years"
 
-generate sexfreq_18yr_bin = 1 if sexfreq_18yr ==3 | sexfreq_18yr ==4 | sexfreq_18yr ==5
-replace sexfreq_18yr_bin = 0 if sexfreq_18yr ==0 | sexfreq_18yr ==1 | sexfreq_18yr ==2
-tab sexfreq_18yr_bin
-label variable sexfreq_18yr_bin"More or less than once a week at 18 years"
+generate sexfreq_bin_18yr = 1 if sexfreq_18yr ==3 | sexfreq_18yr ==4 | sexfreq_18yr ==5
+replace sexfreq_bin_18yr = 0 if sexfreq_18yr ==0 | sexfreq_18yr ==1 | sexfreq_18yr ==2
+tab sexfreq_bin_18yr
+label variable sexfreq_bin_18yr"More or less than once a week at 18 years"
 
 * In order to make the Chi-squared tests work for demographics I need to code each category of 
 * the categorical variables as binary variables 
@@ -1675,5 +1682,12 @@ tab epis_tear
 label define epis_ear_lb 0"No episiotomy or perineal tear" 1"Episiotomy or perineal tear"
 label values epis_tear epis_tear_lb
 tab epis_tear
+
+* Coding caesarean removing minus numbers to missing
+
+recode caesarean (-10=.) (-1=.)
+tab caesarean if qlet == "A" & mod < 6, nolabel
+tab caesarean if qlet == "A" & mod < 6
+tab mod caesarean if qlet == "A"
 
 save flo_dataset.dta, replace
