@@ -14,14 +14,15 @@ Current evidence has been derived using short follow-up times or cross-sectional
 # Aims & Objectives 
 This project will first describe the participant characteristics of the women in ALSPAC with mode of delivery data at 33 months postpartum. Participant characteristics will also be described for mum's at 18 years postpartum to compare non-responders. Each outcome (sexual frequency & satisfaction) will then be described generating risk and odds ratios respectively, for each timepoint where they are both available, in complete cases. Exposures compared: vaginal delivery vs caesarean section, instrumental delivery vs non-instrumental and elective vs emergency caesarean. Utilise methods of dealing with missing data to mitigate the bias that is created by relying on a complete case analysis. 
 
-Explore sexual pain in the vagina during sex and elsewhere after sex (11 years postpartum) for each of these exposure comparisons. Again, utilise ordinal logistic regression to maintain the richeness of the categorical data for this outcome.
+Explore sexual pain in the vagina during sex and elsewhere after sex (11 years postpartum) for each of these exposure comparisons. Again, utilise a yet to be decided type of regression to maintain the richeness of the categorical data for this outcome.
 
 # Methods
 1. Extract & clean the questionnaire & clincal data from mum's enrolled in ALSPAC & derive variables
 2. Explore types of exposure & outcome at each timepoint
-3. Provide participant characteristics for covariates across timepoints in each delivery group
-4. Perform (a type of?!) logistic regression to generate odds and risk ratios for enjoying sex and for sexual frequency in each delivery group 
-5. Develop an imputation model to deal with the missing data present in the cohort
+3. Provide participant characteristics for covariates across timepoints in vaginal delivery vs caesarean section
+4. Generate absolute risks for primary and secondary outcomes
+5. Perform (a type of?!) logistic regression to generate odds and risk ratios for enjoying sex and for sexual frequency in each delivery group 
+6. Develop an imputation model to deal with the missing data present in the cohort
 
 # Keywords
 Childbirth, mode of delivery, caesarean section, sexual satisfaction, sexual frequency, dyspareunia
