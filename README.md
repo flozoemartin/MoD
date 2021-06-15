@@ -4,7 +4,7 @@ Dissertation - Associations between mode of delivery & maternal sexual outcomes:
 Author: Flo Martin
 
 # Collaborators  
-Dr Harriet Forbes (supervisor), Dr Abigail Fraser (supervisor), Dr Paul Madley-Dowd, Viktor Ahlqvist & Egill Jonsson Bachmann
+Dr Harriet Forbes (supervisor), Professor Abigail Fraser (supervisor), Dr Paul Madley-Dowd, Viktor Ahlqvist & Egill Jonsson Bachmann
 
 # Rationale
 Sexual health is an important part of a person's wellbeing, including women of childbearing age. Sexual function decline has been plausibly linked to vaginal delivery due to the potential for mechanistic damage of the perineum and pelvic floor muscles. The literature is conflicting as to whether delivering children naturally actually results in women experiencing reduced sexual satisfaction and that delivering via caesarean section is protective of such decline. With rates of caesarean section on the rise, it is important to employ robust causal inference methods to better understand the relationship between mode of delivery and subsequent maternal sexual satisfaction and frequency, to better inform mum' and their doctors in obstetric decision making.
@@ -21,8 +21,8 @@ Explore sexual pain in the vagina during sex and elsewhere after sex (11 years p
 2. Explore types of exposure & outcome at each timepoint
 3. Provide participant characteristics for covariates across timepoints in vaginal delivery vs caesarean section
 4. Generate absolute risks for primary and secondary outcomes
-5. Perform (a type of?!) logistic regression to generate odds and risk ratios for enjoying sex and for sexual frequency in each delivery group 
-6. Develop an imputation model to deal with the missing data present in the cohort
+5. Perform ordinal logistic regression to generate odds ratios for enjoying sex and for sexual frequency in each delivery group 
+6. Perform ordinal logistic regression to generate odds ratios for experiencing sex-related pain in each delivery group
 
 # Keywords
 Childbirth, mode of delivery, caesarean section, sexual satisfaction, sexual frequency, dyspareunia
