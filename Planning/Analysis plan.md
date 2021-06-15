@@ -16,17 +16,17 @@ Having described the women in the delivery groups, I will then move onto using l
 - [x] Check the cleaning & recoding script from Jun/Jul '20
 - [x] Condense the regressions for each time-point into loops
 - [x] Re-pull the dataset including variable stratifying type of caesarean section
-- [ ] Define exposure groups (modes of delivery)
-- [ ] Describe the cohort at each time-point for each outcome
-- [ ] Develop a longitudinal model to describe each outcome
-- [ ] Describe participant characteristics
+- [x] Define exposure groups (modes of delivery)
+- [x] Describe the cohort at each time-point for each outcome
+- [x] Develop a longitudinal model to describe each outcome
+- [x] Describe participant characteristics
 
 ### Section 2 - Analysing the data
-- [ ] Run ordinal logistic regression models for crude & adjusted (for maternal age & BMI, parity, anxiety & depression) models
+- [x] Run ordinal logistic regression models for crude & adjusted (for maternal age & BMI, parity, anxiety & depression) models
   - Vaginal delivery vs caesarean section for outcomes at each timepoint
   - Instrumental vs non-instrumental vaginal for outcomes at each timepoint
   - Elective vs emergency caesarean section for outcomes at each timepoint (if N high enough)
-- [ ] Deal with missing data
+- [x] Describe missing data
 
-:wrench: Work in progress! :wrench:
+:tada: Finish study! :tada:
 
