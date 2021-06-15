@@ -1,8 +1,8 @@
-*	Mode of delivery on sexual health outcomes using ALSPAC - Data Cleaning
+* Mode of delivery on sexual health outcomes using ALSPAC - Data Cleaning
 
-*	Author:			Florence Martin (Epidemiology, MSc)
+* Author: Flo Martin 
 
-*	Date started:	01/03/2021
+* Date started: 01/03/2021
 
 * Contents *
 * line 14 Database management *
