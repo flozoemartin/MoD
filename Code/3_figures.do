@@ -1,12 +1,93 @@
 
-* Figure 2 - Sexual enjoyment, frequency and pain in caesarean section as compared with vaginal delivery
+* Figure 2 - Proportion of women in each category for each outcome at each timepoint
+* Figure 3 - Sexual enjoyment, frequency and pain in caesarean section as compared with vaginal delivery
 
 * Author: Flo Martin
 
 * Date started: 13/04/2021
 
-* Date finished: 15/06/2021
+* Date finished: 07/07/2021
 
+* Contents *
+* line 15 - Figure 2 *
+* line 90 - Figure 3 *
+
+* Figure 2
+clear
+input float barorder str10 timepoint float one two three four
+1	"33 months" 0.76 9.18 41.44 48.62
+2	"5 years" 0.81 7.74 41.50 49.94
+3	"12 years" 0.66 7.09 43.63 48.62
+4	"18 years" 1.36 9.05 43.95 45.64
+end
+
+set scheme s2color
+graph bar one two three four, over(timepoint, sort(barorder) label(labsize(vsmall))) legend(label(1 "No, not at all") label(2 "No, not a lot") label(3 "Yes, somewhat") label(4 "Yes a lot") size(vsmall) row(4) region(margin(1 -1 2 2))) bar(4, color("dkorange%70")) bar(3, color("forest_green%70")) bar(2, color("maroon%70")) bar(1, color("navy%70"))  stack ///
+title("{bf}Sexual" "{bf}enjoyment", size(small) color(black))  ///
+subtitle("33 months - 18 years postpartum", size(vsmall)) ///
+graphregion(color(white) margin(0 -2 1 1)) ///
+l2title("{bf:Proportion of women (%)}", size(small)) ylabel(, nogrid labsize(vsmall)) ///
+b2title("t", color(white) size(vsmall)) ///
+fxsize(40) fysize(100) ///
+name(sexsat_likert, replace)
+
+
+clear
+input float barorder str10 timepoint float one two three four five six
+1	"33 months" 9.69 11.78 27.29 25.39 23.79 2.05
+2	"5 years" 9.28 10.27 26.47 24.73 27.11 2.13
+3	"12 years" 12.36 13.75 26.13 22.77 22.91 2.07
+4	"18 years" 19.18 17.95 21.74 21.64 18.26 1.23
+end
+
+set scheme s2color
+graph bar one two three four five six, over(timepoint, sort(barorder) label(labsize(vsmall))) legend(label(1 "Not at all") label(2 "Less than once" "a month") label(3 "1-3 times" "a month") label(4 "About once" "a week") label(5 "2-4 times" "a week") label(6 "5+ times" "a week") size(vsmall) row(3) region(margin(1 6 2 2))) bar(6, color("cranberry%70")) bar(5, color("teal%70")) bar(4, color("dkorange%70")) bar(3, color("forest_green%70")) bar(2, color("maroon%70")) bar(1, color("navy%70")) stack ///
+title("{bf}Sexual" "{bf}frequency", size(small) color(black))  ///
+subtitle("33 months - 18 years postpartum", size(vsmall)) ///
+graphregion(color(white) margin(0 -2 1 1)) ///
+yscale(lstyle(none)) ///
+ylabel("", nogrid notick) ///
+b2title("t", color(white) size(*1.4)) ///
+fxsize(38) fysize(100) ///
+name(sexfreq_likert, replace)
+
+
+clear
+input float barorder str10 timepoint float one two three four
+1	"11 years" 78.25 18.89 2.10 0.76
+end
+
+set scheme s2color
+graph bar one two three four, over(timepoint, sort(barorder) label(labsize(vsmall))) legend(label(1 "Not at all") label(2 "A little") label(3 "Moderate") label(4 "A lot") size(vsmall) row(4) region(margin(1 7 2 2))) bar(1, color("dkorange%70")) bar(2, color("forest_green%70")) bar(3, color("maroon%70")) bar(4, color("navy%70")) stack ///
+title("{bf}Pain in the vagina" "{bf}during sex", size(small) color(black))  ///
+subtitle("11 years postpartum", size(vsmall)) ///
+graphregion(color(white) margin(-2 -1 1 1)) ///
+yscale(lstyle(none)) ///
+ylabel("", nogrid notick) ///
+b2title("t", color(white) size(vsmall)) ///
+fxsize(14) fysize(100) ///
+name(dyspareunia_likert, replace)
+
+
+clear
+input float barorder str10 timepoint float one two three four
+1	"11 years" 91.80 6.89 1.13 0.19
+end
+
+set scheme s2color
+graph bar one two three four, over(timepoint, sort(barorder) label(labsize(vsmall))) legend(label(1 "Never") label(2 "Occasional") label(3 "Often") label(4 "Always") size(vsmall) row(4) region(margin(1 9 2 2))) bar(1, color("dkorange%70")) bar(2, color("forest_green%70")) bar(3, color("maroon%70")) bar(4, color("navy%70")) stack ///
+title("{bf}Pain elsewhere" "{bf}after sex", size(small) color(black))  ///
+subtitle("11 years postpartum", size(vsmall)) ///
+graphregion(color(white) margin(-2 -1 1 1)) ///
+yscale(lstyle(none)) ///
+ylabel("", nogrid notick) ///
+b2title("t", color(white) size(vsmall)) ///
+fxsize(14) fysize(100) ///
+name(pain_elsewhere_likert, replace)
+
+graph combine sexsat_likert sexfreq_likert dyspareunia_likert pain_elsewhere_likert, row(1) graphregion(color(white)) name("fig_2", replace)
+
+* Figure 3
 * Sexual enjoyment chunk
 
 clear
@@ -123,5 +204,5 @@ twoway (scatter or id, ms(o) mc(black)) (rcap lci uci id, lc(black))   ///
 
 * Combine the chunks
 
-graph combine sexsat_adjonly sexfreq_adjonly dyspareunia_adjonly pain_adjonly, row(1) graphregion(color(white))
+graph combine sexsat_adjonly sexfreq_adjonly dyspareunia_adjonly pain_adjonly, row(1) graphregion(color(white)) name("fig_3", replace)
 	   
