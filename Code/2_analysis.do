@@ -17,7 +17,7 @@
 * line 331 Sensitivity analysis - "No sex at the moment" *
 * line 354 Sensitivity analysis - Including predictors (not currently included in the manuscript 14/06) *
 
-cd "/Users/ti19522/OneDrive - University of Bristol/Documents/PhD/Year 1/ALSPAC MoD Study/Data"
+cd "/location/of/the/data"
 use flo_dataset_cc.dta, clear
 
 * Figure 1 - flow diagram
