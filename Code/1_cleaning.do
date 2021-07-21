@@ -11,7 +11,7 @@
 * line 247 Exposure *
 * line 361 Sensitivity analysis variables *
 
-cd "/Users/ti19522/OneDrive - University of Bristol/Documents/PhD/Year 1/ALSPAC MoD Study/Data"
+cd "/location/of/the/data"
 use flo_22mar21.dta, clear
 
 drop if qlet =="B"
