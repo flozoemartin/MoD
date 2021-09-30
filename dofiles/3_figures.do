@@ -12,6 +12,12 @@
 * line 15 - Figure 2 *
 * line 90 - Figure 3 *
 
+* Start logging
+log using "$Logdir/log_figures.txt", text replace
+
+* Change directory for saving graphs
+cd "$Projectdir/graphfiles"
+
 * Figure 2
 clear
 input float barorder str10 timepoint float one two three four
@@ -21,8 +27,7 @@ input float barorder str10 timepoint float one two three four
 4	"18 years" 1.36 9.05 43.95 45.64
 end
 
-set scheme s2color
-graph bar one two three four, over(timepoint, sort(barorder) label(labsize(vsmall))) legend(label(1 "No, not at all") label(2 "No, not a lot") label(3 "Yes, somewhat") label(4 "Yes a lot") size(vsmall) row(4) region(margin(1 -1 2 2))) bar(4, color("dkorange%70")) bar(3, color("forest_green%70")) bar(2, color("maroon%70")) bar(1, color("navy%70"))  stack ///
+graph bar one two three four, over(timepoint, sort(barorder) label(labsize(vsmall))) legend(label(1 "No, not at all") label(2 "No, not a lot") label(3 "Yes, somewhat") label(4 "Yes a lot") size(vsmall) row(4) region(margin(1 -1 2 2)) symxsize(*0.2)) bar(4, color("33 103 126%70")) bar(3, color("106 59 119%70")) bar(2, color("130 47 90%70")) bar(1, color("208 114 50%70"))  stack ///
 title("{bf}Sexual" "{bf}enjoyment", size(small) color(black))  ///
 subtitle("33 months - 18 years postpartum", size(vsmall)) ///
 graphregion(color(white) margin(0 -2 1 1)) ///
@@ -40,8 +45,7 @@ input float barorder str10 timepoint float one two three four five six
 4	"18 years" 19.18 17.95 21.74 21.64 18.26 1.23
 end
 
-set scheme s2color
-graph bar one two three four five six, over(timepoint, sort(barorder) label(labsize(vsmall))) legend(label(1 "Not at all") label(2 "Less than once" "a month") label(3 "1-3 times" "a month") label(4 "About once" "a week") label(5 "2-4 times" "a week") label(6 "5+ times" "a week") size(vsmall) row(3) region(margin(1 6 2 2))) bar(6, color("cranberry%70")) bar(5, color("teal%70")) bar(4, color("dkorange%70")) bar(3, color("forest_green%70")) bar(2, color("maroon%70")) bar(1, color("navy%70")) stack ///
+graph bar one two three four five six, over(timepoint, sort(barorder) label(labsize(vsmall))) legend(label(1 "Not at all") label(2 "Less than once" "a month") label(3 "1-3 times" "a month") label(4 "About once" "a week") label(5 "2-4 times" "a week") label(6 "5+ times" "a week") size(vsmall) row(3) region(margin(1 6 2 2)) symxsize(*0.2)) bar(6, color("33 103 126%70")) bar(5, color("106 59 119%70")) bar(4, color("130 47 90%70")) bar(3, color("208 114 50%70")) bar(2, color("255 219 0%70")) bar(1, color("181 211 52%70")) stack ///
 title("{bf}Sexual" "{bf}frequency", size(small) color(black))  ///
 subtitle("33 months - 18 years postpartum", size(vsmall)) ///
 graphregion(color(white) margin(0 -2 1 1)) ///
@@ -57,8 +61,7 @@ input float barorder str10 timepoint float one two three four
 1	"11 years" 78.25 18.89 2.10 0.76
 end
 
-set scheme s2color
-graph bar one two three four, over(timepoint, sort(barorder) label(labsize(vsmall))) legend(label(1 "Not at all") label(2 "A little") label(3 "Moderate") label(4 "A lot") size(vsmall) row(4) region(margin(1 7 2 2))) bar(1, color("dkorange%70")) bar(2, color("forest_green%70")) bar(3, color("maroon%70")) bar(4, color("navy%70")) stack ///
+graph bar one two three four, over(timepoint, sort(barorder) label(labsize(vsmall))) legend(label(1 "Not at all") label(2 "A little") label(3 "Moderate") label(4 "A lot") size(vsmall) row(4) region(margin(1 7 2 2)) symxsize(*0.5)) bar(4, color("208 114 50%70")) bar(3, color("130 47 90%70")) bar(2, color("106 59 119%70")) bar(1, color("33 103 126%70")) stack ///
 title("{bf}Pain in the vagina" "{bf}during sex", size(small) color(black))  ///
 subtitle("11 years postpartum", size(vsmall)) ///
 graphregion(color(white) margin(-2 -1 1 1)) ///
@@ -74,8 +77,7 @@ input float barorder str10 timepoint float one two three four
 1	"11 years" 91.80 6.89 1.13 0.19
 end
 
-set scheme s2color
-graph bar one two three four, over(timepoint, sort(barorder) label(labsize(vsmall))) legend(label(1 "Never") label(2 "Occasional") label(3 "Often") label(4 "Always") size(vsmall) row(4) region(margin(1 9 2 2))) bar(1, color("dkorange%70")) bar(2, color("forest_green%70")) bar(3, color("maroon%70")) bar(4, color("navy%70")) stack ///
+graph bar one two three four, over(timepoint, sort(barorder) label(labsize(vsmall))) legend(label(1 "Never") label(2 "Occasional") label(3 "Often") label(4 "Always") size(vsmall) row(4) region(margin(1 9 2 2)) symxsize(*0.9)) bar(4, color("208 114 50%70")) bar(3, color("130 47 90%70")) bar(2, color("106 59 119%70")) bar(1, color("33 103 126%70")) stack ///
 title("{bf}Pain elsewhere" "{bf}after sex", size(small) color(black))  ///
 subtitle("11 years postpartum", size(vsmall)) ///
 graphregion(color(white) margin(-2 -1 1 1)) ///
@@ -87,9 +89,11 @@ name(pain_elsewhere_likert, replace)
 
 graph combine sexsat_likert sexfreq_likert dyspareunia_likert pain_elsewhere_likert, row(1) graphregion(color(white)) name("fig_2", replace)
 
+* Save figure 2 as .tif in graphfiles
+graph export fig_2.tif, name(fig_2) replace
+
 * Figure 3
 * Sexual enjoyment chunk
-
 clear
 input id gr or lci uci
 1	1	1.16	.994	1.36
@@ -122,7 +126,6 @@ addplot: (pcarrowi 0.9 0.3 0.7 0.3, color(black) legend(off)), norescaling
 addplot: (pcarrowi 1.55 0.3 2.1 0.3, color(black) legend(off)), norescaling
 	     
 * Sexual frequency chunk
-
 clear
 input id gr or lci uci
 1	1	.989	.862	1.13
@@ -153,7 +156,6 @@ twoway (scatter or id, ms(o) mc(black)) (rcap lci uci id, lc(black))   ///
 	   fxsize(40) fysize(100)
 	   
 * Pain in the vagina during sex chunk
-
 clear
 input id gr or lci uci
 1	1	1.72	1.42	2.08
@@ -178,7 +180,6 @@ twoway (scatter or id, ms(o) mc(black)) (rcap lci uci id, lc(black))   ///
 	   fxsize(14) fysize(100)
 
 * Pain elsewhere after sex chunk
-
 clear
 input id gr or lci uci
 1	1	1.67	1.25	2.25
@@ -203,6 +204,11 @@ twoway (scatter or id, ms(o) mc(black)) (rcap lci uci id, lc(black))   ///
 	   fxsize(14) fysize(100)	   
 
 * Combine the chunks
-
 graph combine sexsat_adjonly sexfreq_adjonly dyspareunia_adjonly pain_adjonly, row(1) graphregion(color(white)) name("fig_3", replace)
+
+* Save figure 3 as .tif in graphfiles
+graph export fig_3.tif, name(fig_3) replace
+
+* Stop logging
+log close
 	   

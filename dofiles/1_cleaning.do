@@ -1,3 +1,4 @@
+
 * Mode of delivery on sexual health outcomes using ALSPAC - Data Cleaning
 
 * Author: Flo Martin 
@@ -11,12 +12,17 @@
 * line 247 Exposure *
 * line 361 Sensitivity analysis variables *
 
-cd "/location/of/the/data"
-use flo_22mar21.dta, clear
+* Start logging
+log using "$Logdir/log_cleaning.txt", text replace
 
+* Load in the data
+cd "$Projectdir/rawdata"
+use flo_24sep21.dta, clear
+
+* Drop twins (mum duplicated in the data)
 drop if qlet =="B"
 
-* Labels
+* Labels used throughout 
 label define sexfreq_lb 0"Not at all" 1"< once a month" 2"1-3 times a month" 3"About once a week" 4"2-4 times a week" 5">5 times a week"
 label define sexsat_lb 0"No sex at the moment" 1"No, not at all" 2"No, not a lot" 3"Yes, somewhat" 4"Yes, very much"
 label define sexfreqvsprepreg_lb 1"Less often" 2"About as often" 3"More often"
@@ -36,9 +42,7 @@ label define parity_lb 0"Nulliparous" 1"Multiparous"
 label define age_cat_lb 0"Under 25" 1"25 and over"
 label define bmi_cat_lb 0"Underweight" 1"Normal" 2"Overweight" 3"Obese"
 
-* Firstly, I need to change all the variable names to something that is more
-* recognisable for the analysis
-
+* Change variable names
 rename mz028b matage_delivery
 rename a525 marital_status
 rename b032 parity_18wkgest
@@ -47,6 +51,8 @@ rename b370 epds_18wkgest
 rename c645a mat_edu
 rename c800 ethnic_group
 rename c802 mat_ethn
+rename dw002 mat_wt
+rename dw021 mat_ht
 rename dw042 mat_bmi
 rename g131 sexfreqvsprepreg_21mo
 rename h095 sexfreq_33mo
@@ -86,7 +92,56 @@ rename t1050 marital_status_18yr
 rename t3500 health_18yr
 rename t9994 age_18yr
 
-* Now, I need to explore the data and recode string variables as numerical variables for analysis
+* Where some variables have missing = .a | .b replace with .
+foreach varname of varlist mod matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest mat_edu mat_bmi mat_ht mat_wt sexsat_33mo sexsat_5yr sexsat_12yr sexsat_18yr sexfreq_33mo sexfreq_5yr sexfreq_12yr sexfreq_18yr dyspareunia_11yr pain_elsewhere_11yr b924 h001 k0007a r0007a s0007a t0007a {
+	replace `varname' =. if `varname' == .a | `varname' == .b
+}
+
+* Returned the questionnaire prenatal
+tab b924, nolabel
+gen b001 = 1 if b924 !=.
+replace b001 = 0 if b924 ==.
+label values b001 bin_lb
+label variable b001"Questionnaire returned prenatal"
+tab b001
+
+* Returned the questionnaire 33 months
+tab h001, nolabel
+replace h001 = 1 if h001 >0 & h001 !=.
+replace h001 = 0 if h001 ==.
+label values h001 bin_lb
+label variable h001"Questionnaire returned 33 months"
+tab h001
+
+* Returned the questionnaire 5 years
+tab k0007a, nolabel
+replace k0007a = 0 if k0007a ==2 | k0007a ==.
+label values k0007a bin_lb
+label variable k0007a"Questionnaire returned 5 years"
+tab k0007a
+
+* Returned the questionnaire 11 years
+tab r0007a, nolabel
+replace r0007a = 0 if r0007a ==2 | r0007a ==.
+label values r0007a bin_lb
+label variable r0007a"Questionnaire returned 11 years"
+tab r0007a
+
+* Returned the questionnaire 12 years
+tab s0007a, nolabel
+replace s0007a = 0 if s0007a ==2 | s0007a ==.
+label values s0007a bin_lb
+label variable s0007a"Questionnaire returned 12 years"
+tab s0007a
+
+* Returned the questionnaire 18 years
+tab t0007a, nolabel
+replace t0007a = 0 if t0007a ==2 | t0007a ==.
+label values t0007a bin_lb
+label variable t0007a"Questionnaire returned 18 years"
+tab t0007a
+
+* Clean & generate variables for the analysis
 
 * Maternal age at delivery
 tab matage_delivery
@@ -103,7 +158,6 @@ tab marital_status, nolabel
 recode marital_status (-1=.)
 
 * Parity at 18 weeks gestation 
-
 tab parity_18wkgest
 tab parity_18wkgest, nolabel
 recode parity_18wkgest (-7=.) (-2=.) (-1=.)
@@ -117,13 +171,11 @@ label values parity_bin parity_lb
 tab parity_bin
 
 * Crown Crisp score for anxiety at 18 weeks gestation
-
 tab cc_anxiety_18wkgest
 tab cc_anxiety_18wkgest, nolabel
 recode cc_anxiety_18wkgest (-7=.) (-1=.)
 
 * Categorising Crown Crisp anxiety score at 18 weeks gestation
-
 tab cc_anxiety_18wkgest
 generate cc_anxiety_bin = 0 if cc_anxiety_18wkgest >=0 & cc_anxiety_18wkgest <9
 replace cc_anxiety_bin = 1 if cc_anxiety_18wkgest >=9 & cc_anxiety_18wkgest !=.
@@ -134,13 +186,11 @@ tab cc_anxiety_bin
 label variable cc_anxiety_bin"Crown Crisp anxiety score at 18 weeks gestation"
 
 * Edinburgh Post-Natal Depression Score at 18 weeks gestation
-
 tab epds_18wkgest
 tab epds_18wkgest, nolabel
 recode epds_18wkgest (-7=.) (-1=.)
 
 * Dichotomising Edinburgh post-natal depression score at 18 weeks gestation
-
 tab epds_18wkgest
 generate epds_bin = 0 if epds_18wkgest >=0 & epds_18wkgest <13
 replace epds_bin = 1 if epds_18wkgest >=13 & epds_18wkgest !=.
@@ -151,7 +201,6 @@ tab epds_bin
 label variable epds_bin"Edinburgh post-natal depression score at 18 weeks gestation"
 
 * Highest achieved education qualification for mum as reported at the 32 week gestation questionnaire (leaving the coding as is)
-
 tab mat_edu
 tab mat_edu, nolabel
 recode mat_edu (-1=.)
@@ -165,13 +214,11 @@ label values mat_degree mat_degree_lb
 tab mat_degree
 
 * Maternal ethnicity (leaving coding as is)
-
 tab mat_ethn
 tab mat_ethn, nolabel
 recode mat_ethn (-1=.)
 
 * Dichotomising maternal ethnicity 
-
 tab mat_ethn
 tab mat_ethn, nolabel
 generate mat_ethn_bin = 0 if mat_ethn ==1
@@ -183,7 +230,6 @@ tab mat_ethn_bin
 label variable mat_ethn_bin"Maternal ethnicity"
 
 * Maternal BMI (need to generate a BMI category variable)
-
 tab mat_bmi
 tab mat_bmi, nolabel
 recode mat_bmi (-3=.)
@@ -197,7 +243,6 @@ tab bmi_cat
 
 * Frequency of sex as compared with before pregnancy - recoded so that increasing
 * number confers more often
-
 tab sexfreqvsprepreg
 tab sexfreqvsprepreg, nolabel
 recode sexfreqvsprepreg (-1=.) (1=3) (2=2) (3=1)
@@ -205,7 +250,6 @@ label values sexfreqvsprepreg sexfreqvsprepreg_lb
 tab sexfreqvsprepreg
 
 * Frequency of sex at 33 months postpartum coded similarly to 21 months
-
 tab sexfreq_33mo
 tab sexfreq_33mo, nolabel
 recode sexfreq_33mo (-1=.) (1=0) (2=1) (3=2) (4=3) (5=4) (6=5)
@@ -215,79 +259,62 @@ tab sexfreq_33mo
 * Sexual satisfaction "do you enjoy sex?" at 33 months postpartum coded as 
 * increasing enjoyment conferred by increasing numbers and that "no sex now"
 * conferred by zero
-
 tab sexsat_33mo
 tab sexsat_33mo, nolabel
 recode sexsat_33mo (-1=.) (1=4) (2=3) (3=2) (4=1) (5=0)
 label values sexsat_33mo sexsat_lb
 tab sexsat_33mo
 
-* Sexual frequency at 5 years 1 month postpartum - coding consistent with other
-* time points
-
+* Sexual frequency at 5 years 1 month postpartum - coding consistent with other time points
 tab sexfreq_5yr
 tab sexfreq_5yr, nolabel
 recode sexfreq_5yr (-10=.) (-1=.) (1=0) (2=1) (3=2) (4=3) (5=4) (6=5)
 label values sexfreq_5yr sexfreq_lb
 tab sexfreq_5yr
 
-* Sexual satisfaction at 5 years 1 month postpartum - coding consistent with
-* other time points
-
+* Sexual satisfaction at 5 years 1 month postpartum - coding consistent with other time points
 tab sexsat_5yr
 tab sexsat_5yr, nolabel
 recode sexsat_5yr (-10=.) (-1=.) (1=4) (2=3) (3=2) (4=1) (5=0)
 label values sexsat_5yr sexsat_lb
 tab sexsat_5yr
 
-* Mum has ever had pain or soreness in the vagina during intercourse at 11 years
-* 1 month- recoded so that "not at all" is represented by a 0
-
+* Mum has ever had pain or soreness in the vagina during intercourse at 11 years 1 month- recoded so that "not at all" is represented by a 0
 tab dyspareunia_11yr
 tab dyspareunia_11yr, nolabel
 recode dyspareunia_11yr (-10=.) (-1=.) (1=0) (2=1) (3=2) (4=3)
 label values dyspareunia_11yr dyspareunia_11yr_lb
 tab dyspareunia_11yr
 
-* Frequency mum experiences pain elsewhere after intercourse - leave recoding 
-* this for now as a couple of options could be fairly represented by a zero
-
+* Frequency mum experiences pain elsewhere after intercourse - leave recoding this for now as a couple of options could be fairly represented by a zero
 tab pain_elsewhere_11yr
 tab pain_elsewhere_11yr, nolabel
 recode pain_elsewhere_11yr (-10=.) (-1=.) (0=.) (1=1) (2=2) (3=3) (4=4) (5=0)
 label values pain_elsewhere_11yr pain_elsewhere_11yr_lb
 tab pain_elsewhere_11yr
 
-* Frequency of sex at 12 years 1 months postpartum - coding consistent with other
-* time points
-
+* Frequency of sex at 12 years 1 months postpartum - coding consistent with other time points
 tab sexfreq_12yr
 tab sexfreq_12yr, nolabel
 recode sexfreq_12yr (-10=.) (-1=.) (1=0) (2=1) (3=2) (4=3) (5=4) (6=5)
 label values sexfreq_12yr sexfreq_lb
 tab sexfreq_12yr
 
-* Sexual satisfaction at 12 years 1 month - coding consistent with other time 
-* points
-
+* Sexual satisfaction at 12 years 1 month - coding consistent with other time points
 tab sexsat_12yr
 tab sexsat_12yr, nolabel
 recode sexsat_12yr (-10=.) (-1=.) (1=4) (2=3) (3=2) (4=1) (5=0)
 label values sexsat_12yr sexsat_lb
 tab sexsat_12yr
 
-* Frequency of sex at 18 years postpartum - coding consistent with other
-* time points
-
+* Frequency of sex at 18 years postpartum - coding consistent with other time points
 tab sexfreq_18yr
 tab sexfreq_18yr, nolabel
 recode sexfreq_18yr (-10=.) (-1=.) (1=0) (2=1) (3=2) (4=3) (5=4) (6=5)
 label values sexfreq_18yr sexfreq_lb
 tab sexfreq_18yr
 
-* Sexual satisfaction at 18 years - coding consistent with other time 
-* points
-
+* Sexual satisfaction at 18 years - coding consistent with other time points
 tab sexsat_18yr
 tab sexsat_18yr, nolabel
 recode sexsat_18yr (-10=.) (-1=.) (1=4) (2=3) (3=2) (4=1) (5=0)
@@ -296,7 +323,6 @@ tab sexsat_18yr
 
 * Mode of delivery - exposure
 * For the mode of delivery variable I am going to make sure that I have as many women correctly categorised as possible
-
 tab mod 
 tab caesarean, nolabel
 recode caesarean (-10=.) (-1=.)
@@ -304,11 +330,6 @@ generate caesarean_bin = 1 if caesarean ==1 | caesarean ==2
 replace caesarean_bin = 0 if caesarean ==3
 label values caesarean_bin bin_lb
 tab mod caesarean_bin 
-
-* There are two women who have been coded as breech extraction and CS so I want to remove them as well as two women coded as forceps & caesarean
-drop if caesarean_bin ==1 & mod ==2
-drop if caesarean_bin ==1 & mod ==4
-tab mod caesarean_bin
 
 * Now I have added the women who are coded in mod as other but caesarean as emergency CS to the CS group in mod - now the groups I have aren't "contaminated" with multiple methods of birth
 tab mod caesarean 
@@ -359,6 +380,7 @@ label value emergency_vs_vaginal emergency_vs_vaginal_lb
 tab emergency_vs_vaginal
 
 * Given that caesarean_bin gets very small, leaving some categories empty I can pool some of the categories allowing us to do some analysis
+
 * Recode the frequency variable to pool top two categories at each timepoint so the elective CS isn't empty at the top of the scale => separate categories "2-4 times a week" and ">5 times a week" become one category ">= 2 times a week"
 generate sexfreq_33mo_5cat = 0 if sexfreq_33mo == 0
 replace sexfreq_33mo_5cat = 1 if sexfreq_33mo == 1
@@ -416,7 +438,8 @@ replace pain_elsewhere_11yr_4cat = 3 if pain_elsewhere_11yr ==3 | pain_elsewhere
 tab pain_elsewhere_11yr pain_elsewhere_11yr_4cat
 
 * Sensitivity analysis variables - for dealing with 'no sex at the moment' women, we can approach this is two ways:
-* Binary - any sex vs no sex at each timepoint 
+* Binary - any sex vs no sex at each timepoint
+ 
 * Sexual enjoyment
 tab sexsat_33mo, nolabel
 gen any_none_33mo =.
@@ -456,6 +479,7 @@ label values any_none_11yr any_none_lb
 tab any_none_11yr
 
 * Worst-case scenario - 'no sex at the moment' recoded as 'no satisfaction' or 'always pain'
+
 * Sexual enjoyment
 tab sexsat_33mo
 gen worst_case_33mo =.
@@ -615,9 +639,19 @@ replace cc = 0 if matage_delivery ==. | mat_bmi ==. | cc_anxiety_18wkgest ==. | 
 replace cc = 1 if matage_delivery !=. & mat_bmi !=. & cc_anxiety_18wkgest !=. & epds_18wkgest !=. & parity_18wkgest !=. & mat_edu !=.
 tab cc
 
-save flo_dataset.dta, replace
+* Save complete clean dataset n=15,442
+save "$Datadir/flo_dataset.dta", replace
+
+* There are two women who have been coded as breech extraction and CS so I want to remove them as well as two women coded as forceps & caesarean
+drop if caesarean_bin ==1 & mod ==2
+drop if caesarean_bin ==1 & mod ==4
+tab mod caesarean_bin
 
 drop if mod ==6 | mod ==.
+
+* Save clean dataset including those with complete exposure data n=13,299
+save "$Datadir/mi_dataset.dta", replace
+
 drop if matage_delivery ==.
 drop if mat_bmi ==.
 drop if cc_anxiety_18wkgest ==.
@@ -625,4 +659,8 @@ drop if epds_18wkgest ==.
 drop if parity_18wkgest ==.
 drop if mat_edu ==.
 
-save flo_dataset_cc.dta, replace
+* Save clean dataset including those with complete exposure & covariate data n=9,231
+save "$Datadir/flo_dataset_cc.dta", replace
+
+* Stop logging
+log close

@@ -17,15 +17,12 @@
 * line 331 Sensitivity analysis - "No sex at the moment" *
 * line 354 Sensitivity analysis - Including predictors (not currently included in the manuscript 14/06) *
 
-cd "/location/of/the/data"
-use flo_dataset_cc.dta, clear
+* Start logging
+log using "$Logdir/log_analysis.txt", text replace
 
-* Figure 1 - flow diagram
-count if sexsat_33mo !=. | sexfreq_33mo !=.
-count if sexsat_5yr !=. | sexfreq_5yr !=.
-count if dyspareunia_11yr !=. | pain_elsewhere_11yr !=.
-count if sexsat_12yr !=. | sexfreq_12yr !=.
-count if sexsat_18yr !=. | sexfreq_18yr !=.
+* Load in the data
+cd "$Projectdir/datafiles"
+use flo_dataset_cc.dta, clear
 
 * Table 1 - characteristic summary between caesarean section and vaginal delivery in complete cases
 
@@ -105,54 +102,6 @@ tab sexfreq_18yr elective_vs_vaginal, col
 
 tab dyspareunia_11yr elective_vs_vaginal, col
 tab pain_elsewhere_11yr elective_vs_vaginal, col
-
-* Association between exposure/outcome and predictors
-* 33 months
-tab health_33mo sexsat_33mo, row chi
-tab marital_status_33mo sexsat_33mo, row chi
-tab anxiety_bin_33mo sexsat_33mo, row chi
-tab depression_bin_33mo sexsat_33mo, row chi
-
-tab health_33mo vaginal_delivery, col chi
-tab marital_status_33mo vaginal_delivery, col chi
-tab anxiety_bin_33mo vaginal_delivery, col chi
-tab depression_bin_33mo vaginal_delivery, col chi
-
-* 5 years
-tab health_5yr sexsat_5yr, row chi
-tab anxiety_5yr sexsat_5yr, row chi
-tab depression_5yr sexsat_5yr, row chi
-
-tab health_5yr vaginal_delivery, col chi
-tab anxiety_5yr vaginal_delivery, col chi
-tab depression_5yr vaginal_delivery, col chi
-
-* 11 years
-tab anxiety_11yr dyspareunia_11yr, row chi
-tab depression_11yr dyspareunia_11yr, row chi
-
-tab anxiety_11yr vaginal_delivery, col chi
-tab depression_11yr vaginal_delivery, col chi
-
-* 12 years
-tab health_12yr sexsat_12yr, row chi
-tab anxiety_12yr sexsat_12yr, row chi
-tab depression_12yr sexsat_12yr, row chi
-
-tab health_12yr vaginal_delivery, col chi
-tab anxiety_12yr vaginal_delivery, col chi
-tab depression_12yr vaginal_delivery, col chi
-
-* 18 years
-tab health_18yr sexsat_18yr, row chi
-tab marital_status_18yr sexsat_18yr, row chi
-tab anxiety_18yr sexsat_18yr, row chi
-tab depression_bin_18yr sexsat_18yr, row chi
-
-tab health_18yr vaginal_delivery, col chi
-tab marital_status_18yr vaginal_delivery, col chi
-tab anxiety_18yr vaginal_delivery, col chi
-tab depression_bin_18yr vaginal_delivery, col chi
 
 * Now, to check we can use ologit, we need to check that the assumption of proportionality holds
 
@@ -351,48 +300,11 @@ tab worst_case_11yr vaginal_delivery
 ologit worst_case_11yr i.vaginal_delivery, or 
 ologit worst_case_11yr i.vaginal_delivery matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi, or
 
-* With predictors in at each timepoint
-* The primary analysis comparing caesarean section with vaginal delivery
-* Sexual satisfaction with confounders and predictors
-tab sexsat_33mo vaginal_delivery if sexsat_33mo !=0 & age_33mo !=. & health_33mo !=. & anxiety_33mo !=. & depression_33mo !=. & marital_status_33mo !=.
-ologit sexsat_33mo i.vaginal_delivery if sexsat_33mo !=0 & age_33mo !=. & health_33mo !=. & anxiety_33mo !=. & depression_33mo !=. & marital_status_33mo !=., or 
-	ologit sexsat_33mo i.vaginal_delivery matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi age_33mo i.health_33mo anxiety_33mo depression_33mo i.marital_status_33mo if sexsat_33mo !=0, or
-	
-tab sexsat_5yr vaginal_delivery if sexsat_5yr !=0 & age_5yr !=. & health_5yr !=. & anxiety_5yr !=. & depression_5yr !=.
-ologit sexsat_5yr i.vaginal_delivery if sexsat_5yr !=0 & age_5yr !=. & health_5yr !=. & anxiety_5yr !=. & depression_5yr !=., or 
-	ologit sexsat_5yr i.vaginal_delivery matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi age_5yr i.health_5yr anxiety_5yr depression_5yr if sexsat_5yr !=0, or
-	
-tab sexsat_12yr vaginal_delivery if sexsat_12yr !=0 & age_12yr !=. & health_12yr !=. & anxiety_12yr !=. & depression_12yr !=.
-ologit sexsat_12yr i.vaginal_delivery if sexsat_12yr !=0 & age_12yr !=. & health_12yr !=. & anxiety_12yr !=. & depression_12yr !=., or 
-	ologit sexsat_12yr i.vaginal_delivery matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi age_12yr i.health_12yr anxiety_12yr depression_12yr if sexsat_12yr !=0, or
-	
-tab sexsat_18yr vaginal_delivery if sexsat_18yr !=0 & age_18yr !=. & health_18yr !=. & anxiety_18yr !=. & depression_18yr !=. & marital_status_18yr !=.
-ologit sexsat_18yr i.vaginal_delivery if sexsat_18yr !=0 & age_18yr !=. & health_18yr !=. & anxiety_18yr !=. & depression_18yr !=. & marital_status_18yr !=., or 
-	ologit sexsat_18yr i.vaginal_delivery matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi age_18yr i.health_18yr anxiety_18yr depression_18yr i.marital_status_18yr if sexsat_18yr !=0, or
+* Checking to see correlation between "no sex at the moment" in enjoyment and none in sexual frequency
+tab sexsat_33mo sexfreq_33mo if sexsat_33mo ==0 & sexfreq_33mo !=0
+tab sexsat_5yr sexfreq_5yr if sexsat_5yr ==0 & sexfreq_5yr !=0
+tab sexsat_12yr sexfreq_12yr if sexsat_12yr ==0 & sexfreq_12yr !=0
+tab sexsat_18yr sexfreq_18yr if sexsat_18yr ==0 & sexfreq_18yr !=0
 
-* Sexual frequency with confounders and predictors
-tab sexfreq_33mo vaginal_delivery if age_33mo !=. & health_33mo !=. & anxiety_33mo !=. & depression_33mo !=. & marital_status_33mo !=.
-ologit sexfreq_33mo i.vaginal_delivery if age_33mo !=. & health_33mo !=. & anxiety_33mo !=. & depression_33mo !=. & marital_status_33mo !=., or 
-	ologit sexfreq_33mo i.vaginal_delivery matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi age_33mo i.health_33mo anxiety_33mo depression_33mo i.marital_status_33mo, or
-	
-tab sexfreq_5yr vaginal_delivery if age_5yr !=. & health_5yr !=. & anxiety_5yr !=. & depression_5yr !=.
-ologit sexfreq_5yr i.vaginal_delivery if age_5yr !=. & health_5yr !=. & anxiety_5yr !=. & depression_5yr !=., or 
-	ologit sexfreq_5yr i.vaginal_delivery matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi age_5yr i.health_5yr anxiety_5yr depression_5yr, or
-	
-tab sexfreq_12yr vaginal_delivery if age_12yr !=. & health_12yr !=. & anxiety_12yr !=. & depression_12yr !=.
-ologit sexfreq_12yr i.vaginal_delivery if age_12yr !=. & health_12yr !=. & anxiety_12yr !=. & depression_12yr !=., or 
-	ologit sexfreq_12yr i.vaginal_delivery matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi age_12yr i.health_12yr anxiety_12yr depression_12yr, or
-	
-tab sexfreq_18yr vaginal_delivery if age_18yr !=. & health_18yr !=. & anxiety_18yr !=. & depression_18yr !=. & marital_status_18yr !=.
-ologit sexfreq_18yr i.vaginal_delivery if age_18yr !=. & health_18yr !=. & anxiety_18yr !=. & depression_18yr !=. & marital_status_18yr !=., or 
-	ologit sexfreq_18yr i.vaginal_delivery matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi age_18yr i.health_18yr anxiety_18yr depression_18yr i.marital_status_18yr, or
-	
-* Sexual pain
-
-tab dyspareunia_11yr vaginal_delivery if age_11yr !=. & anxiety_11yr !=. & depression_11yr !=.
-ologit dyspareunia_11yr i.vaginal_delivery if age_11yr !=. & anxiety_11yr !=. & depression_11yr !=., or 
-ologit dyspareunia_11yr i.vaginal_delivery matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi age_11yr anxiety_11yr depression_11yr, or
-	
-tab pain_elsewhere_11yr vaginal_delivery if pain_elsewhere_11yr !=0	& age_11yr !=. & anxiety_11yr !=. & depression_11yr !=.
-ologit pain_elsewhere_11yr i.vaginal_delivery if pain_elsewhere_11yr !=0 & age_11yr !=. & anxiety_11yr !=. & depression_11yr !=., or 
-ologit pain_elsewhere_11yr i.vaginal_delivery matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi age_11yr anxiety_11yr depression_11yr if pain_elsewhere_11yr !=0, or
+* Stop logging
+log close
