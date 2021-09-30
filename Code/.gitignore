@@ -1,9 +1,9 @@
 
-* Author: Paul Madley-Dowd
+# Author: Paul Madley-Dowd
 
-* Date: 30/09/2021
+# Date: 30/09/2021
 
-* Description: File to define which files should not be stored on github
+# Description: File to define which files should not be stored on github
                This will prevent data and log files from being stored online
 
 
