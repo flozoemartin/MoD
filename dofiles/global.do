@@ -7,7 +7,7 @@
 
 clear 
 
-global Projectdir "/Users/ti19522/OneDrive - University of Bristol/Mode of delivery study/Analysis"
+global Projectdir "/Users/ti19522/OneDrive - University of Bristol/Documents/PhD/Year 1/ALSPAC MoD Study/Analysis"
 
 global Dodir 		"/Users/ti19522/Documents/GitHub/MoD/dofiles"
 global Logdir 		"$Projectdir/logfiles"

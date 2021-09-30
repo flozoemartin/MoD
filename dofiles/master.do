@@ -30,8 +30,8 @@ do "$Dodir/3_figures.do"		// Create figures 2 & 3
 
 
 * 5 - Multiple imputation		
-do "$Dodir/4_mi_prep.do"	// Prepare data for multiple imputation
-*do "$Dodir/4_mi.do"		// Run the imputation models
+do "$Dodir/4_mi_prep.do"		// Prepare data for multiple imputation
+*do "$Dodir/4_mi.do"			// Run the imputation models
 
 
 * 6 - Supplementary				
