@@ -1,41 +1,62 @@
 
+***************************************************************************************************************************
+
+* Master file to run all do files in the correct order for mode of 	delivery & maternal sexual outcomes project
+
 * Author: 		Flo Martin
 
-* Date: 		30th September 2021
+* Date started: 30/09/2021
 
-* Description: 	Master file to run all do files in the correct order for mode of 	delivery & maternal sexual outcomes project
+* Date finished:
+
+***************************************************************************************************************************
 
 * Contents
-* 1 - Run global.do
-* 2 - Cleaning
-* 3 - Analyses
-* 4 - Figures
-* 5 - Multiple imputation
-* 6 - Supplementary material
+* line 27 - Run global.do *
+* line 31 - Cleaning *
+* line 35 - Multiple imputation prep *
+* line 39 - Multiple imputation *
+* line 43 - Analysis *
+* line 47 - Figure prep *
+* line 51 - Figures *
+* line 55 - Supplementary figure prep *
+* line 59 - Supplementary material *
 
-* 1 - Run global.do - sets the directories for project
-do "/Users/ti19522/Documents/GitHub/MoD/dofiles/global.do"
+***************************************************************************************************************************
 
+* Run global.do - sets the directories for project
 
-* 2 - Cleaning
-do "$Dodir/1_cleaning.do"		// Raw data duplicated & cleaned - datasets created
+	do "/Users/ti19522/Documents/GitHub/MoD/dofiles/global.do"
 
+* 1 - Cleaning
 
-* 3 - Analyses
-do "$Dodir/2_analysis.do"		// Descriptive & substantive analyses
+	do "$Dodir/1_cleaning.do"		// Raw data duplicated & cleaned - datasets created
 
+* 2 - Multiple imputation prep
 
-* 4 - Figures
-do "$Dodir/3_figures.do"		// Create figures 2 & 3
+	do "$Dodir/2_mi_prep.do"		// Multiple imputation datasets created 
 
+* 3 - Multiple imputation
+	
+	do "$Dodir/3_mi.do"				// Imputing two dataset using mi impute chained
 
-* 5 - Multiple imputation		
-do "$Dodir/4_mi_prep.do"		// Prepare data for multiple imputation
-*do "$Dodir/4_mi.do"			// Run the imputation models
+* 4 - Analysis
 
+	do "$Dodir/4_analysis.do"		// Descriptive & substantive analysis in imputed dataset - including table creation
 
-* 6 - Supplementary				
-do "$Dodir/5_supplementary.do"	// Generate supplementary material (figures & tables)
+* 5 - Figure preparation
 
+	do "$Dodir/5_figure_prep.do" 	// Create dataframes used for figure 3
 
+* 6 - Figures
+
+	do "$Dodir/6_figures.do"		// Create figures 2 & 3
+
+* 7 - Supplementary figure preparation
+
+	do "$Dodir/7_supp_fig_prep.do" 	// Create dataframes used for supplementary figures 2 - 5
+
+* 8 - Supplementary	material			
+
+	do "$Dodir/8_supplementary.do"	// Generate supplementary material (figure 1 - 5 & tables 1 - 12)
 
