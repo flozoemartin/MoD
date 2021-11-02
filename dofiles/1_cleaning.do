@@ -242,7 +242,14 @@
 	replace parity_bin = 1 if parity_18wkgest >0 & parity_18wkgest !=.
 	label values parity_bin parity_lb
 	tab parity_bin
+	
+* Missing in parity
 
+	gen parity_cc = 1 if parity_bin !=.
+	replace parity_cc = 0 if parity_bin ==.
+	label values parity_cc bin_lb 
+	tab parity_cc
+	
 * Crown Crisp score for anxiety at 18 weeks gestation
 
 	tab cc_anxiety_18wkgest
@@ -259,6 +266,13 @@
 	label values cc_anxiety_bin cc_anxiety_bin_lb
 	tab cc_anxiety_bin
 	label variable cc_anxiety_bin"Crown Crisp anxiety score at 18 weeks gestation"
+	
+* Missing in anxiety
+
+	gen anxiety_cc = 1 if cc_anxiety_bin !=.
+	replace anxiety_cc = 0 if cc_anxiety_bin ==.
+	label values anxiety_cc bin_lb 
+	tab anxiety_cc
 
 * Edinburgh Post-Natal Depression Score at 18 weeks gestation
 
@@ -276,6 +290,13 @@
 	label values epds_bin epds_bin_lb
 	tab epds_bin
 	label variable epds_bin"Edinburgh post-natal depression score at 18 weeks gestation"
+	
+* Missing in depression
+
+	gen epds_cc = 1 if epds_bin !=.
+	replace epds_cc = 0 if epds_bin ==.
+	label values epds_cc bin_lb 
+	tab epds_cc
 
 * Highest achieved education qualification for mum as reported at the 32 week gestation questionnaire (leaving the coding as is)
 
@@ -291,6 +312,13 @@
 	replace mat_degree = 0 if mat_edu <5 & mat_edu !=.
 	label values mat_degree mat_degree_lb
 	tab mat_degree
+	
+* Missing in maternal education
+
+	gen mat_edu_cc = 1 if mat_degree !=.
+	replace mat_edu_cc = 0 if mat_degree ==.
+	label values mat_edu_cc bin_lb 
+	tab mat_edu_cc
 
 * Maternal ethnicity (leaving coding as is)
 
@@ -321,6 +349,13 @@
 	replace bmi_cat = 3 if mat_bmi >=30 & mat_bmi !=.
 	label values bmi_cat bmi_cat_lb
 	tab bmi_cat 
+	
+* Missing in bmi
+
+	gen bmi_cc = 1 if mat_bmi !=.
+	replace bmi_cc = 0 if mat_bmi ==.
+	label values bmi_cc bin_lb 
+	tab bmi_cc
 
 * Frequency of sex at 33 months postpartum coded similarly to 21 months
 

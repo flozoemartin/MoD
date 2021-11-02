@@ -40,20 +40,21 @@
 	tab vaginal_delivery
 
 	ttest mat_bmi, by(vaginal_delivery) 
+	tab bmi_cc vaginal_delivery, col chi
 
 	ttest matage_delivery, by(vaginal_delivery)
 
 	tab cc_anxiety_bin vaginal_delivery, col chi
-	tab cc_anxiety_bin vaginal_delivery, col m
+	tab anxiety_cc vaginal_delivery, col chi
 	
 	tab epds_bin vaginal_delivery, col chi
-	tab epds_bin vaginal_delivery, col m
+	tab epds_cc vaginal_delivery, col chi
 
 	tab parity_bin vaginal_delivery, col chi
-	tab parity_bin vaginal_delivery, col m
+	tab parity_cc vaginal_delivery, col chi
 	
 	tab mat_degree vaginal_delivery, col chi
-	tab mat_degree vaginal_delivery, col m
+	tab mat_edu_cc vaginal_delivery, col chi
 
 ***************************************************************************************************************************
 	
