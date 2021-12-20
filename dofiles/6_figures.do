@@ -28,6 +28,52 @@
 	
 ***************************************************************************************************************************
 
+* Figure 1 - flow of participants through the study
+
+	local osmall = 	", box margin(medium) fcolor(white) size(small) justification(centre) placement(3)"
+
+	local omed = 	", box margin(medium) fcolor(white) size(small) justification(centre) placement(3)"
+
+	local bc = ", lwidth(medthick) lcolor(black)" 
+
+	local bca = ", lwidth(medthick) lcolor(black) mlcolor(black) mlwidth(medthick) msize(medlarge)"
+
+	twoway  /// 1) PCI to draw a box 2) PIC horizontal lines 3) pcarrowi: connecting arrows.
+   pci 9.95 0.25 9.95 9.95 `bc' || pci 9.95 9.95 3.8 9.95 `bc' || pci 3.8 9.95 3.8 0.25 `bc' || pci 3.8 0.25 9.95 0.25 `bc' ///
+	|| pcarrowi 9.5 2.35 6.85 2.35 `bca'  ///
+	|| pcarrowi 8 2.35 8 4.98 `bca'  ///
+	|| pcarrowi 6.2 2.35 4.91 2.35 `bca'  ///
+	|| pcarrowi 5.6 2.35 5.6 4.98 `bca'  ///
+	, /// Don't forget this comma if the above is removed
+	text(9.35 0.5 "Participants enrolled in" "ALSPAC" "{it:n} = 15,454" `omed') ///
+	text(8 5 "{bf:Excluded:}" ///
+		"Withdrawn consent" ///
+		"{it:n} = 13" ///
+		"Mode of delivery missing" ///
+		"{it:n} = 1,981" ///
+		"Mode of delivery 'other'" ///
+		"{it:n} = 157" ///
+		"Conflicting mode of delivery" ///
+		"{it:n} = 4" ///
+		`osmall') ///
+	text(6.5 0.5 "Participants with mode" "of delivery data available" "{it:n} = 13,299" `omed') ///
+	text(5.6 5 "{bf:Excluded:}" ///
+	"Participants with no observed" "outcomes" ///
+	"{it:n} = 2,972" ///
+	`osmall') ///
+	text(4.5 0.5 "Participants with at least" "one observed outcome at" "any timepoint" "{it:n} = 10,327" `omed' ) ///
+	legend(off) ///
+	xlabel("") ylabel("") xtitle("") ytitle("") ///
+	graphregion(lcolor(white) fcolor(white) margin(zero)) yscale(range(4.5 10) noline) xscale(range(0 10) noline) ///
+	plotregion(margin(zero) fcolor(white)  lcolor(white)) ///
+	xsize(8.27) ysize(11.69) /// A4 aspect ratio
+	title("") ///
+	scheme(s1mono) name(fig_1, replace)
+ 
+	graph export fig_1.tif, name(fig_1) replace
+
+***************************************************************************************************************************
+
 * Figure 2
 
 * Overall prevalence
