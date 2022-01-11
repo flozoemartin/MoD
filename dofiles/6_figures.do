@@ -1,6 +1,6 @@
-
 ***************************************************************************************************************************
 
+* Figure 1 - Flow diagram of participants through the study
 * Figure 2 - Proportion of women in each category for each outcome at each timepoint
 * Figure 3 - Sexual enjoyment, frequency and pain in caesarean section as compared with vaginal delivery
 
