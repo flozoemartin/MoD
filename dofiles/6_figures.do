@@ -4,7 +4,7 @@
 * Figure 2 - Proportion of women in each category for each outcome at each timepoint
 * Figure 3 - Sexual enjoyment, frequency and pain in caesarean section as compared with vaginal delivery
 
-* Author: Flo Martin
+* Author: Flo Martin (Figure 1 and 3 code adapted from Viktor Ahlqvist)
 
 * Date started: 13/04/2021
 
