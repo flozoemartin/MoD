@@ -982,6 +982,48 @@
 	use "$Datadir/outputs/stata/MI_manuscript_5.dta", clear
 	export delim using "$Datadir/outputs/MI_manuscript_5.csv", delim(",") replace
 	
+	
+***************************************************************************************************************************
+
+* Supplementary table 13 - complete case analysis sensitivity analysis in nulliparous women
+
+	use "$Datadir/flo_dataset_cc.dta", clear
+
+	capture postutil close 
+	tempname memhold 
+
+	postfile `memhold' str10 outcome str50 model str10 OR str20 OR_CI str20 p ///
+	using "$Datadir/outputs/stata/MI_manuscript_6.dta", replace
+
+	local i = 0
+	local exposure vaginal_delivery  
+	
+	foreach outcome in sexsat_33mo sexsat_5yr sexsat_12yr sexsat_18yr sexfreq_33mo sexfreq_5yr sexfreq_12yr sexfreq_18yr dyspareunia_11yr pain_elsewhere_11yr {
+	local i = `i' + 1
+	
+	ologit `outcome' `exposure' if parity_18wkgest==0
+	post `memhold' ("`outcome'") ("Unadjusted") ///
+		(strofreal(exp(r(table)[1,1]), "%5.2f")) ///
+		("(" + strofreal(exp(r(table)[5,1]),"%5.2f") + " - " + strofreal(exp(r(table)[6,1]),"%5.2f") + ")") ///
+		(strofreal(r(table)[4,1]), "%4.3f")
+
+	ologit `outcome' `exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi if parity_18wkgest==0
+	post `memhold' ("`outcome'") ("Adjusted") ///
+		(strofreal(exp(r(table)[1,1]), "%5.2f")) ///
+		("(" + strofreal(exp(r(table)[5,1]),"%5.2f") + " - " + strofreal(exp(r(table)[6,1]),"%5.2f") + ")") ///
+		(strofreal(r(table)[4,1]), "%4.3f")
+
+}
+
+	postclose `memhold'
+
+	use "$Datadir/outputs/stata/MI_manuscript_6.dta", clear
+
+* Prepare models for output
+
+	use "$Datadir/outputs/stata/MI_manuscript_6.dta", clear
+	export delim using "$Datadir/outputs/MI_manuscript_6.csv", delim(",") replace
+
 ***************************************************************************************************************************
 
 * Supplementary figure 5 - complete case analysis against MI results
