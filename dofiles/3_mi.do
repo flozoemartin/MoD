@@ -28,7 +28,7 @@
 					abs_wtgain_meas anxiety_33mo depression_33mo ///  
 					sexsat_33mo sexsat_5yr sexsat_12yr sexsat_18yr sexfreq_33mo sexfreq_5yr sexfreq_12yr sexfreq_18yr ///
 					dyspareunia_11yr pain_elsewhere_11yr
-	mi register regular mod matage_delivery 
+	mi register regular mod matage_delivery diabetes 
 
 	mi impute chained (regress) mat_bmi abs_wtgain_meas ///
 				  (ologit) sexsat_33mo sexsat_5yr sexsat_12yr sexsat_18yr ///
@@ -36,7 +36,7 @@
 					dyspareunia_11yr pain_elsewhere_11yr ///
 				  (pmm, knn(10)) parity_18wkgest cc_anxiety_18wkgest epds_18wkgest anxiety_33mo depression_33mo /// 
 				  (mlogit, augment) mat_edu ///
-				  = i.mod matage_delivery ///
+				  = i.mod matage_delivery diabetes ///
 				  , add(100) rseed(484286) dots 
 
 	save "$Datadir/imputed_data_1.dta", replace
@@ -54,7 +54,7 @@
 					abs_wtgain_meas anxiety_33mo depression_33mo ///  
 					sexsat_33mo sexsat_5yr sexsat_12yr sexsat_18yr sexfreq_33mo sexfreq_5yr sexfreq_12yr sexfreq_18yr ///
 					dyspareunia_11yr pain_elsewhere_11yr
-	mi register regular mod matage_delivery 
+	mi register regular mod matage_delivery diabetes
 
 	mi impute chained (regress) mat_bmi abs_wtgain_meas ///
 				  (ologit) sexsat_33mo sexsat_5yr sexsat_12yr sexsat_18yr ///
@@ -62,10 +62,36 @@
 					dyspareunia_11yr pain_elsewhere_11yr ///
 				  (pmm, knn(10)) parity_18wkgest cc_anxiety_18wkgest epds_18wkgest anxiety_33mo depression_33mo /// 
 				  (mlogit, augment) mat_edu ///
-				  = i.mod matage_delivery ///
+				  = i.mod matage_delivery diabetes ///
 				  , add(100) rseed(484286) dots
 
 	save "$Datadir/imputed_data_2.dta", replace
+	
+***************************************************************************************************************************
+	
+* Load in the dataset containing participants with complete exposure data for mi_cohort_1
+	
+	use "$Datadir/mi_cohort_1.dta", clear
+
+* Create imputed dataset
+
+	mi set wide
+	mi register imputed parity_18wkgest mat_bmi cc_anxiety_18wkgest epds_18wkgest mat_edu general_health /// 
+					abs_wtgain_meas anxiety_33mo depression_33mo ///  
+					sexsat_33mo sexsat_5yr sexsat_12yr sexsat_18yr sexfreq_33mo sexfreq_5yr sexfreq_12yr sexfreq_18yr ///
+					dyspareunia_11yr pain_elsewhere_11yr
+	mi register regular mod matage_delivery diabetes
+
+	mi impute chained (regress) mat_bmi abs_wtgain_meas ///
+				  (ologit) sexsat_33mo sexsat_5yr sexsat_12yr sexsat_18yr ///
+					sexfreq_33mo sexfreq_5yr sexfreq_12yr sexfreq_18yr ///
+					dyspareunia_11yr pain_elsewhere_11yr general_health ///
+				  (pmm, knn(10)) parity_18wkgest cc_anxiety_18wkgest epds_18wkgest anxiety_33mo depression_33mo /// 
+				  (mlogit, augment) mat_edu ///
+				  = i.mod matage_delivery diabetes ///
+				  , add(100) rseed(484286) dots 
+
+	save "$Datadir/imputed_data_3.dta", replace
 	
 ***************************************************************************************************************************
 

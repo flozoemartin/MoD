@@ -43,6 +43,9 @@
 	tab bmi_cc vaginal_delivery, col chi
 
 	ttest matage_delivery, by(vaginal_delivery)
+	
+	tab diabetes vaginal_delivery, col chi
+	tab diabetes_cc vaginal_delivery, col chi
 
 	tab cc_anxiety_bin vaginal_delivery, col chi
 	tab anxiety_cc vaginal_delivery, col chi
@@ -110,7 +113,7 @@
 		("(" + strofreal(exp(r(table)[5,1]),"%5.2f") + " to " + strofreal(exp(r(table)[6,1]),"%5.2f") + ")") ///
 		(strofreal(r(table)[4,1]), "%4.3f") 
 
-	mi estimate: ologit `outcome' `exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi 
+	mi estimate: ologit `outcome' `exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi diabetes
 	post `memhold' ("`outcome'") ("Adjusted") ///
 		(strofreal(exp(r(table)[1,1]), "%5.2f")) ///
 		("(" + strofreal(exp(r(table)[5,1]),"%5.2f") + " to " + strofreal(exp(r(table)[6,1]),"%5.2f") + ")") ///

@@ -23,7 +23,7 @@
 
 * Load in the data
 	
-	use "$Rawdatadir/flo_25oct21.dta", clear
+	use "$Rawdatadir/flo_10may22.dta", clear
 
 * Drop twins (mum duplicated in the data)
 
@@ -58,6 +58,7 @@
 	rename b032 parity_18wkgest
 	rename b351 cc_anxiety_18wkgest
 	rename b370 epds_18wkgest
+	rename c050 general_health
 	rename c645a mat_edu
 	rename c802 mat_ethn
 	rename dw002 mat_wt
@@ -74,6 +75,7 @@
 	rename k1191 sexsat_5yr
 	rename k5070 k_rand_miss	// Random question later in questionnaire (K)
 	rename v1dac6_method_delivery mod
+	rename v1dab6k_diabetes diabetes
 	rename DEL_P1212 caesarean
 	rename r2170 r_prev_miss 	// Previous question to sex qu's for missing data justification (R)
 	rename r2191 dyspareunia_11yr
@@ -90,7 +92,7 @@
 
 * Where some variables have missing = .a | .b replace with .
 	
-	foreach varname of varlist mod matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest mat_edu mat_bmi mat_ht mat_wt sexsat_33mo sexsat_5yr sexsat_12yr sexsat_18yr sexfreq_33mo sexfreq_5yr sexfreq_12yr sexfreq_18yr dyspareunia_11yr pain_elsewhere_11yr b924 h001 h_prev_miss h_rand_miss k0007a k_prev_miss k_rand_miss r0007a r_prev_miss r_rand_miss s0007a s_prev_miss s_rand_miss t0007a t_prev_miss t_rand_miss {
+	foreach varname of varlist mod matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest mat_edu mat_bmi mat_ht mat_wt sexsat_33mo sexsat_5yr sexsat_12yr sexsat_18yr sexfreq_33mo sexfreq_5yr sexfreq_12yr sexfreq_18yr dyspareunia_11yr pain_elsewhere_11yr b924 h001 h_prev_miss h_rand_miss k0007a k_prev_miss k_rand_miss r0007a r_prev_miss r_rand_miss s0007a s_prev_miss s_rand_miss t0007a t_prev_miss t_rand_miss diabetes general_health {
 	
 	replace `varname' =. if `varname' == .a | `varname' == .b
 	
@@ -356,6 +358,20 @@
 	replace bmi_cc = 0 if mat_bmi ==.
 	label values bmi_cc bin_lb 
 	tab bmi_cc
+	
+* Maternal diabetes
+
+	tab diabetes, nolabel
+	recode diabetes 2=0 
+	label values diabetes bin_lb
+	tab diabetes
+	
+* Missing diabetes
+
+	gen diabetes_cc = 1 if diabetes !=.
+	replace diabetes_cc = 0 if diabetes ==.
+	label values diabetes_cc bin_lb
+	tab diabetes_cc
 
 * Frequency of sex at 33 months postpartum coded similarly to 21 months
 
@@ -665,12 +681,22 @@
 	replace worst_case_11yr = 4 if pain_elsewhere_11yr ==4 | pain_elsewhere_11yr ==0
 	label values worst_case_11yr worst_case_lb
 	tab worst_case_11yr
+	
+* General health sensitivity
+
+	tab general_health, m nolabel
+	recode general_health -7=. -1=. .a=.
+	tab general_health, m
+	recode general_health 1=5 2=4 4=2 5=1
+	label define general_health_lb 1"Always unwell" 2"Often unwell" 3"Sometimes unwell" 4"Usually well" 5"Always well"
+	label values general_health general_health_lb
+	tab general_health, m
 
 * Complete case variable
 
 	gen cc =.	
-	replace cc = 0 if matage_delivery ==. | mat_bmi ==. | cc_anxiety_18wkgest ==. | epds_18wkgest ==. | parity_18wkgest ==. | mat_edu ==.
-	replace cc = 1 if matage_delivery !=. & mat_bmi !=. & cc_anxiety_18wkgest !=. & epds_18wkgest !=. & parity_18wkgest !=. & mat_edu !=.
+	replace cc = 0 if matage_delivery ==. | mat_bmi ==. | cc_anxiety_18wkgest ==. | epds_18wkgest ==. | parity_18wkgest ==. | mat_edu ==. | diabetes ==.
+	replace cc = 1 if matage_delivery !=. & mat_bmi !=. & cc_anxiety_18wkgest !=. & epds_18wkgest !=. & parity_18wkgest !=. & mat_edu !=. & diabetes !=.
 	tab cc
 
 * Save complete clean dataset n=15,442
@@ -701,7 +727,7 @@
 
 * Drop incomplete covariates for complete case analysis
 
-	drop if matage_delivery ==. | mat_bmi ==. | cc_anxiety_18wkgest ==. | epds_18wkgest ==. | parity_18wkgest ==. | mat_edu ==.
+	drop if matage_delivery ==. | mat_bmi ==. | cc_anxiety_18wkgest ==. | epds_18wkgest ==. | parity_18wkgest ==. | mat_edu ==. | diabetes ==.
 
 * Save clean dataset including those with complete exposure & covariate data n=9,231
 

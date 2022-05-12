@@ -7,7 +7,13 @@
 
 *	Date started:	29/09/2021
 
-* 	Date finished:	06/10/2021
+* 	Date finished:	12/05/2022
+
+* 	Datasets generated: 
+			
+			* mi_cohort_1 - used for the primary analysis & the sensitivity analysis including general health into the adjustment set
+			
+			* mi_cohort_2 - used for the worst-case scenario sensitivity analysis, where 'no sex at the moment' and potential MNAR are recoded as low enjoyment or high pain
 
 ***************************************************************************************************************************
 
@@ -23,13 +29,13 @@
 
 * Check numbers 
 
-	count // n=13,299 complete cases for exposure
+	count // n=13,296 complete cases for exposure
 
 * Generate a variable for those with at least one outcome response
 
 	generate mi_cohort = 1 if sexsat_33mo !=. | sexsat_5yr !=. | sexsat_12yr !=. | sexsat_18yr !=. | sexfreq_33mo !=. | sexfreq_5yr !=. | sexfreq_12yr !=. | sexfreq_18yr !=. | dyspareunia_11yr !=. | pain_elsewhere_11yr !=.
 
-	tab mi_cohort // n=10,327 participants with at least one outcome response
+	tab mi_cohort // n=10,324 participants with at least one outcome response
 
 * Covariates included in the substantive model: maternal age, maternal pre-pregnancy BMI, maternal education, parity, anxiety & depression
 
@@ -52,7 +58,7 @@
 
 * SEP auxiliaries
 	
-	tab marital_status // clean
+	tab marital_status, nolabel // clean
 
 	rename c755 mat_occu
 	tab mat_occu, nolabel
@@ -61,13 +67,15 @@
 
 * Anxiety
 
-	tab anxiety_33mo // clean
+	tab anxiety_33mo, nolabel
+	recode anxiety_33mo -6=. -5=.
 	tab cc_anxiety_18wkgest
 	hist cc_anxiety_18wkgest
 
 * Depression 
 
-	tab depression_33mo // clean
+	tab depression_33mo, nolabel
+	recode depression_33mo -6=. -5=.
 
 * Restrict the dataset to just those for inclusion in the MI n=10,327
 
@@ -87,13 +95,13 @@
 
 * Check numbers 
 
-	count // n=13,299 complete cases for exposure
+	count // n=13,296 complete cases for exposure
 
 * Generate a variable for those with at least one outcome response
 
 	generate mi_cohort = 1 if sexsat_33mo !=. | sexsat_5yr !=. | sexsat_12yr !=. | sexsat_18yr !=. | sexfreq_33mo !=. | sexfreq_5yr !=. | sexfreq_12yr !=. | sexfreq_18yr !=. | dyspareunia_11yr !=. | pain_elsewhere_11yr !=.
 
-	tab mi_cohort // n=10,327 participants with at least one outcome response
+	tab mi_cohort // n=10,324 participants with at least one outcome response
 
 * Sexual enjoyment
 * 33 months
@@ -189,13 +197,15 @@
 
 * Anxiety
 
-	tab anxiety_33mo // clean
+	tab anxiety_33mo, nolabel
+	recode anxiety_33mo -6=. -5=.
 	tab cc_anxiety_18wkgest
 	hist cc_anxiety_18wkgest
 
 * Depression 
 
-	tab depression_33mo // clean
+	tab depression_33mo, nolabel
+	recode depression_33mo -6=. -5=.
 
 * Restrict the dataset to just those for inclusion in the MI n=10,327
 

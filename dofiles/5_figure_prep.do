@@ -39,7 +39,7 @@
 	foreach outcome in sexsat_33mo sexsat_5yr sexsat_12yr sexsat_18yr  {
 	local i = `i' + 1
 	
-	mi estimate: ologit `outcome' `exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi 
+	mi estimate: ologit `outcome' `exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi diabetes
 	post `memhold' (`i') (exp(r(table)[1,1])) (exp(r(table)[5,1])) (exp(r(table)[6,1]))
 
 }
@@ -64,7 +64,7 @@
 	foreach outcome in sexfreq_33mo sexfreq_5yr sexfreq_12yr sexfreq_18yr  {
 	local i = `i' + 1
 	
-	mi estimate: ologit `outcome' `exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi 
+	mi estimate: ologit `outcome' `exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi diabetes
 	post `memhold' (`i') (exp(r(table)[1,1])) (exp(r(table)[5,1])) (exp(r(table)[6,1]))
 
 }
@@ -89,7 +89,7 @@
 	foreach outcome in dyspareunia_11yr  {
 	local i = `i' + 1
 	
-	mi estimate: ologit `outcome' `exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi 
+	mi estimate: ologit `outcome' `exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi diabetes
 	post `memhold' (`i') (exp(r(table)[1,1])) (exp(r(table)[5,1])) (exp(r(table)[6,1]))
 
 }
@@ -114,7 +114,7 @@
 	foreach outcome in pain_elsewhere_11yr  {
 	local i = `i' + 1
 	
-	mi estimate: ologit `outcome' `exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi 
+	mi estimate: ologit `outcome' `exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi diabetes
 	post `memhold' (`i') (exp(r(table)[1,1])) (exp(r(table)[5,1])) (exp(r(table)[6,1]))
 
 }
