@@ -32,8 +32,11 @@
 
 * Participation rate
 
-	tab sexsat_33mo sexfreq_33mo, m
-	tab sexsat_18yr sexfreq_18yr, m
+	tab sexsat_33mo
+	tab sexsat_18yr
+	
+	tab sexfreq_33mo
+	tab sexfreq_18yr	
 
 * Table 1 - characteristic summary between caesarean section and vaginal delivery in complete cases
 
@@ -45,7 +48,6 @@
 	ttest matage_delivery, by(vaginal_delivery)
 	
 	tab diabetes vaginal_delivery, col chi
-	tab diabetes_cc vaginal_delivery, col chi
 
 	tab cc_anxiety_bin vaginal_delivery, col chi
 	tab anxiety_cc vaginal_delivery, col chi
@@ -77,7 +79,7 @@
 		brant, detail
 	}
 
-* The assumption isn't violated for any of the timepoints for sexual enjoyment and frequency
+* The assumption is only violated for one of the timepoints for frequency (5 years) - we need to run a gologit2 model for frequency at 5 years postpartum
 
 	tab dyspareunia_11yr vaginal_delivery
 	omodel logit dyspareunia_11yr vaginal_delivery  	

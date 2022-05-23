@@ -13,7 +13,7 @@
 
 * Start logging
 
-	log using "7_figure_prep.txt", replace
+	log using "$Logdir/log_figure_prep.txt", replace
 	
 * Change directory for saving dataframes
 

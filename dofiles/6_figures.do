@@ -49,20 +49,20 @@
 	text(9.35 0.5 "Participants enrolled in" "ALSPAC" "{it:n} = 15,454" `omed') ///
 	text(8 5 "{bf:Excluded:}" ///
 		"Withdrawn consent" ///
-		"{it:n} = 13" ///
+		"{it:n} = 12" ///
 		"Mode of delivery missing" ///
-		"{it:n} = 1,981" ///
+		"{it:n} = 1,985" ///
 		"Mode of delivery 'other'" ///
 		"{it:n} = 157" ///
 		"Conflicting mode of delivery" ///
 		"{it:n} = 4" ///
 		`osmall') ///
-	text(6.5 0.5 "Participants with mode" "of delivery data available" "{it:n} = 13,299" `omed') ///
+	text(6.5 0.5 "Participants with mode" "of delivery data available" "{it:n} = 13,296" `omed') ///
 	text(5.6 5 "{bf:Excluded:}" ///
 	"Participants with no observed" "outcomes" ///
 	"{it:n} = 2,972" ///
 	`osmall') ///
-	text(4.5 0.5 "Participants with at least" "one observed outcome at" "any timepoint" "{it:n} = 10,327" `omed' ) ///
+	text(4.5 0.5 "Participants with at least" "one observed outcome at" "any timepoint" "{it:n} = 10,324" `omed' ) ///
 	legend(off) ///
 	xlabel("") ylabel("") xtitle("") ytitle("") ///
 	graphregion(lcolor(white) fcolor(white) margin(zero)) yscale(range(4.5 10) noline) xscale(range(0 10) noline) ///
@@ -75,7 +75,7 @@
 
 ***************************************************************************************************************************
 
-* Figure 2
+* Figure 2 and first paragraph of the results
 
 * Overall prevalence
 
@@ -86,7 +86,7 @@
 	}
 	
 	foreach var of varlist sexfreq_33mo sexfreq_5yr sexfreq_12yr sexfreq_18yr {
-		tab `var' if `var'!=0 
+		tab `var' 
 	}
 	
 	 tab dyspareunia_11yr 
@@ -98,10 +98,10 @@
 	clear
 	input float barorder str10 timepoint float one two three four
 		
-		1	"33 months" 0.76 9.18 41.44 48.62
-		2	"5 years" 0.81 7.74 41.50 49.94
-		3	"12 years" 0.66 7.09 43.63 48.62
-		4	"18 years" 1.36 9.05 43.95 45.64
+		1	"33 months" 0.78 9.13 41.12 48.97
+		2	"5 years" 0.79 7.69 41.13 50.38
+		3	"12 years" 0.71 7.14 42.89 49.27
+		4	"18 years" 1.34 8.76 43.02 46.87
 	
 	end
 
@@ -124,10 +124,10 @@
 	clear
 	input float barorder str10 timepoint float one two three four five six
 		
-		1	"33 months" 9.69 11.78 27.29 25.39 23.79 2.05
-		2	"5 years" 9.28 10.27 26.47 24.73 27.11 2.13
-		3	"12 years" 12.36 13.75 26.13 22.77 22.91 2.07
-		4	"18 years" 19.18 17.95 21.74 21.64 18.26 1.23
+		1	"33 months" 9.95 11.73 26.56 25.32 24.28 2.16
+		2	"5 years" 9.66 10.17 26.08 24.72 27.14 2.23
+		3	"12 years" 13.23 13.61 25.72 22.49 22.85 2.09
+		4	"18 years" 19.62 17.69 21.75 21.77 17.85 1.32
 
 	end
 
@@ -153,7 +153,7 @@
 	clear
 	input float barorder str10 timepoint float one two three four
 
-		1	"11 years" 78.25 18.89 2.10 0.76
+		1	"11 years" 78.37 18.90 2.00 0.73
 
 	end
 
@@ -169,6 +169,7 @@
 	yscale(lstyle(none)) ///
 	ylabel("", nogrid notick) ///
 	b2title("t", color(white) size(vsmall)) ///
+	text(99 -20 "2.00%", size(2) color("130 47 90%70")) text(100 120 "0.73%", size(2) color("208 114 50%70")) ///
 	fxsize(14) fysize(100) ///
 	name(dyspareunia_likert, replace)
 
@@ -177,7 +178,7 @@
 	clear
 	input float barorder str10 timepoint float one two three four
 
-			1	"11 years" 91.80 6.89 1.13 0.19
+			1	"11 years" 91.36 7.31 1.05 0.27
 
 		end
 
@@ -193,6 +194,7 @@
 	yscale(lstyle(none)) ///
 	ylabel("", nogrid notick) ///
 	b2title("t", color(white) size(vsmall)) ///
+	text(99 -20 "1.05%", size(2) color("130 47 90%70")) text(100 120 "0.27%", size(2) color("208 114 50%70")) ///
 	fxsize(14) fysize(100) ///
 	name(pain_elsewhere_likert, replace)
 	
@@ -223,19 +225,19 @@
 		title("{bf}Sexual" "{bf}enjoyment", size(small)) ///
 		subtitle("33 months - 18 years postpartum", size(vsmall)) ///
 		xlab(1 `""33 months" "postpartum""' 2 `""5 years" "postpartum""' 3 `""12 years" "postpartum""' 4 `""18 years" 	"postpartum""', labsize(vsmall)) ///
-		graphregion(color(white) margin(0 -2 1 1)) ///
-		text(1.117 1.25 "1.12", size(2)) text(0.977 1.25 "0.98", size(2)) text(1.276 1.25 "1.28", size(2)) ///
-		text(1.074 2.25 "1.07", size(2)) text(0.932 2.25 "0.93", size(2)) text(1.238 2.25 "1.24", size(2)) ///
-		text(1.087 3.25 "1.09", size(2)) text(0.925 3.25 "0.93", size(2)) text(1.277 3.25 "1.28", size(2)) ///
-		text(1.204 4.25 "1.20", size(2)) text(0.983 4.25 "0.98", size(2)) text(1.474 4.25 "1.47", size(2)) ///
-		text(1.7 1.2 "{it:p} = 0.104", size(2)) text(1.7 2.2 "{it:p} = 0.323", size(2)) text(1.7 3.2 "{it:p} = 0.312", size(2)) text(1.7 4.2 "{it:p} = 0.073", size(2)) ///
+		graphregion(color(white) margin(-2 0 1 1)) ///
+		text(1.113 1.25 "1.11", size(2)) text(0.974 1.25 "0.97", size(2)) text(1.271 1.25 "1.27", size(2)) ///
+		text(1.067 2.25 "1.07", size(2)) text(0.931 2.25 "0.93", size(2)) text(1.224 2.25 "1.22", size(2)) ///
+		text(1.073 3.25 "1.07", size(2)) text(0.916 3.25 "0.92", size(2)) text(1.257 3.25 "1.26", size(2)) ///
+		text(1.207 4.25 "1.21", size(2)) text(0.983 4.25 "0.98", size(2)) text(1.482 4.25 "1.48", size(2)) ///
+		text(1.7 1.2 "{it:p} = 0.116", size(2)) text(1.7 2.2 "{it:p} = 0.350", size(2)) text(1.7 3.2 "{it:p} = 0.380", size(2)) text(1.7 4.2 "{it:p} = 0.072", size(2)) ///
 		yscale(log range(0.8 2.2)) ylabel(0.8(0.2)2.2,format(%03.1f) labsize(*0.7) nogrid) ///
-		text(1.6 0.1 "{bf:Higher category among CS}" , orient(vertical) size(vsmall)) text(0.9 0.1 "{bf:Lower category among CS}", orient(vertical) size(vsmall)) ///
-		text(1.1 0.22 "{bf:Adjusted}" "{bf:odds ratio}" "95%" "confidence" "interval", orient(horizontal) size(vsmall)) ///
+		text(1.8 0.1 "{bf:Higher category among CS}" , orient(vertical) size(vsmall)) text(0.9 0.1 "{bf:Lower category among CS}", orient(vertical) size(vsmall)) ///
+		text(1.3 0.1 "{bf:Adjusted}" "{bf:OR (95%CI)}", orient(vertical) size(vsmall)) ///
 		fxsize(40) fysize(100)
 	   
 	addplot: (pcarrowi 1 0.3 0.8 0.3, color(black) legend(off)), norescaling
-	addplot: (pcarrowi 1.4 0.3 1.8 0.3, color(black) legend(off)), norescaling
+	addplot: (pcarrowi 1.6 0.3 2.0 0.3, color(black) legend(off)), norescaling
 	     
 * Sexual frequency chunk
 
@@ -254,11 +256,11 @@
 		subtitle("33 months - 18 years postpartum", size(vsmall)) ///
 		xlab(1 `""33 months" "postpartum""' 2 `""5 years" "postpartum""' 3 `""12 years" "postpartum""' 4 `""18 years" "postpartum""', labsize(vsmall)) ///
 		graphregion(color(white) margin(-2 -2 1 1)) ///
-		text(0.988 1.25 "0.99", size(2)) text(0.877 1.25 "0.88", size(2)) text(1.113 1.25 "1.11", size(2)) ///
-		text(0.920 2.25 "0.92", size(2)) text(0.816 2.25 "0.82", size(2)) text(1.037 2.25 "1.04", size(2)) ///
-		text(0.999 3.25 "1.00", size(2)) text(0.875 3.25 "0.88", size(2)) text(1.141 3.25 "1.14", size(2)) ///
-		text(1.118 4.25 "1.12", size(2)) text(0.940 4.25 "0.94", size(2)) text(1.330 4.25 "1.33", size(2)) ///
-		text(1.7 1.2 "{it:p} = 0.843", size(2)) text(1.7 2.2 "{it:p} = 0.171", size(2)) text(1.7 3.2 "{it:p} = 0.993", size(2)) text(1.7 4.2 "{it:p} = 0.205", size(2)) ///
+		text(0.991 1.25 "0.99", size(2)) text(0.881 1.25 "0.88", size(2)) text(1.116 1.25 "1.12", size(2)) ///
+		text(0.924 2.25 "0.92", size(2)) text(0.818 2.25 "0.82", size(2)) text(1.044 2.25 "1.04", size(2)) ///
+		text(1.009 3.25 "1.01", size(2)) text(0.878 3.25 "0.88", size(2)) text(1.160 3.25 "1.16", size(2)) ///
+		text(1.092 4.25 "1.09", size(2)) text(0.919 4.25 "0.92", size(2)) text(1.298 4.25 "1.30", size(2)) ///
+		text(1.7 1.2 "{it:p} = 0.844", size(2)) text(1.7 2.2 "{it:p} = 0.205", size(2)) text(1.7 3.2 "{it:p} = 0.897", size(2)) text(1.7 4.2 "{it:p} = 0.317", size(2)) ///
 		yscale(log range(0.8 2.2) lstyle(none)) ylabel(0.6(0.2)1.8,angle(.45) format(%5.2f) notick labcolor(white) labsize(*0.7)) ytitle("") ///
 		fxsize(40) fysize(100)
 	   
@@ -279,8 +281,8 @@
 		subtitle("11 years postpartum", size(vsmall)) ///
 		xlab(1 `""11 years" "postpartum""', labsize(vsmall)) ///
 		graphregion(color(white) margin(-2 -1 1 1)) ///
-		text(1.684 1.07 "1.68", size(2)) text(1.415 1.07 "1.42", size(2)) text(2.005 1.07 "2.01", size(2)) ///
-		text(2.1 1 "{it:p} < 0.001", size(2)) ///
+		text(1.744 1.07 "1.74", size(2)) text(1.461 1.07 "1.46", size(2)) text(2.083 1.07 "2.08", size(2)) ///
+		text(2.2 1 "{it:p} < 0.001", size(2)) ///
 		yscale(log range(0.8 2.2) lstyle(none)) ylabel(0.6(0.2)1.8,angle(.45) format(%5.2f) notick labcolor(white) labsize(*0.7)) ytitle("") ///
 		fxsize(15) fysize(100)
 
@@ -301,8 +303,8 @@
 		subtitle("11 years postpartum", size(vsmall)) ///
 		xlab(1 `""11 years" "postpartum""', labsize(vsmall)) ///
 		graphregion(color(white) margin(-2 -1 1 1)) plotregion(color(white)) ///
-		text(1.419 1.07 "1.42", size(2)) text(1.085 1.07 "1.09", size(2)) text(1.856 1.07 "1.86", size(2)) ///
-		text(2.1 1 "{it:p} = 0.011", size(2)) ///
+		text(1.427 1.07 "1.43", size(2)) text(1.097 1.07 "1.10", size(2)) text(1.857 1.07 "1.86", size(2)) ///
+		text(2.2 1 "{it:p} = 0.008", size(2)) ///
 		yscale(log range(0.8 2.2) lstyle(none)) ylabel(0.6(0.2)1.8,angle(.45) format(%03.1f) notick labcolor(white) labsize(*0.7)) ytitle("") ///
 		fxsize(12) fysize(100)	   
 

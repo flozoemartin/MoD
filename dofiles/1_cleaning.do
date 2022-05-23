@@ -713,6 +713,14 @@
 
 	drop if mod ==6 | mod ==.
 	
+* Save the dataset needed for the supplementary exploration of missing data
+
+	* Generate a variable for those with at least one outcome response showing who ends up in the mi_cohort
+
+	generate mi_cohort = 1 if sexsat_33mo !=. | sexsat_5yr !=. | sexsat_12yr !=. | sexsat_18yr !=. | sexfreq_33mo !=. | sexfreq_5yr !=. | sexfreq_12yr !=. | sexfreq_18yr !=. | dyspareunia_11yr !=. | pain_elsewhere_11yr !=.
+
+	save "$Datadir/supp_dataset.dta", replace
+	
 	replace sexsat_33mo =. if nsatm_33mo ==1 
 	replace sexsat_5yr =. if nsatm_5yr ==1 
 	replace pain_elsewhere_11yr =. if nsatm_11yr ==1

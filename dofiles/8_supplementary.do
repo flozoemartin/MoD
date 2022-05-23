@@ -321,24 +321,24 @@
 	count 
 
 * Count the complete cases for each individual variable
-	tab1 vaginal_delivery bmi_cat age_cat mat_degree cc_anxiety_bin epds_bin parity_bin sexsat_33mo sexsat_5yr sexsat_12yr sexsat_18yr sexfreq_33mo sexfreq_5yr sexfreq_12yr sexfreq_18yr dyspareunia_11yr pain_elsewhere_11yr
+	tab1 vaginal_delivery bmi_cat age_cat mat_degree cc_anxiety_bin epds_bin parity_bin sexsat_33mo nsatm_33mo sexsat_5yr nsatm_5yr sexsat_12yr nsatm_12yr sexsat_18yr nsatm_18yr sexfreq_33mo sexfreq_5yr sexfreq_12yr sexfreq_18yr dyspareunia_11yr pain_elsewhere_11yr nsatm_11yr
 
 * Now count all these in my complete cases for sexual enjoyment, frequency and pain
 	
-	use "$Projectdir/datafiles/flo_dataset_cc.dta", clear
+	use "$Projectdir/datafiles/supp_dataset.dta", clear
 
-	tab1 vaginal_delivery bmi_cat age_cat mat_degree cc_anxiety_bin epds_bin parity_bin sexsat_33mo if sexsat_33mo !=.
-	tab1 vaginal_delivery bmi_cat age_cat mat_degree cc_anxiety_bin epds_bin parity_bin sexsat_5yr if sexsat_5yr !=.
-	tab1 vaginal_delivery bmi_cat age_cat mat_degree cc_anxiety_bin epds_bin parity_bin sexsat_12yr if sexsat_12yr !=.
-	tab1 vaginal_delivery bmi_cat age_cat mat_degree cc_anxiety_bin epds_bin parity_bin sexsat_18yr if sexsat_18yr !=.
+	tab1 vaginal_delivery bmi_cat age_cat diabetes mat_degree cc_anxiety_bin epds_bin parity_bin sexsat_33mo if sexsat_33mo !=. & cc==1
+	tab1 vaginal_delivery bmi_cat age_cat diabetes mat_degree cc_anxiety_bin epds_bin parity_bin sexsat_5yr if sexsat_5yr !=. & cc==1
+	tab1 vaginal_delivery bmi_cat age_cat diabetes mat_degree cc_anxiety_bin epds_bin parity_bin sexsat_12yr if sexsat_12yr !=. & cc==1
+	tab1 vaginal_delivery bmi_cat age_cat diabetes mat_degree cc_anxiety_bin epds_bin parity_bin sexsat_18yr if sexsat_18yr !=. & cc==1
 
-	tab1 vaginal_delivery bmi_cat age_cat mat_degree cc_anxiety_bin epds_bin parity_bin sexfreq_33mo if sexfreq_33mo !=.
-	tab1 vaginal_delivery bmi_cat age_cat mat_degree cc_anxiety_bin epds_bin parity_bin sexfreq_5yr if sexfreq_5yr !=.
-	tab1 vaginal_delivery bmi_cat age_cat mat_degree cc_anxiety_bin epds_bin parity_bin sexfreq_12yr if sexfreq_12yr !=.
-	tab1 vaginal_delivery bmi_cat age_cat mat_degree cc_anxiety_bin epds_bin parity_bin sexfreq_18yr if sexfreq_18yr !=.
+	tab1 vaginal_delivery bmi_cat age_cat diabetes mat_degree cc_anxiety_bin epds_bin parity_bin sexfreq_33mo if sexfreq_33mo !=. & cc==1
+	tab1 vaginal_delivery bmi_cat age_cat diabetes mat_degree cc_anxiety_bin epds_bin parity_bin sexfreq_5yr if sexfreq_5yr !=. & cc==1
+	tab1 vaginal_delivery bmi_cat age_cat diabetes mat_degree cc_anxiety_bin epds_bin parity_bin sexfreq_12yr if sexfreq_12yr !=. & cc==1
+	tab1 vaginal_delivery bmi_cat age_cat diabetes mat_degree cc_anxiety_bin epds_bin parity_bin sexfreq_18yr if sexfreq_18yr !=. & cc==1
 
-	tab1 vaginal_delivery bmi_cat age_cat mat_degree cc_anxiety_bin epds_bin parity_bin dyspareunia_11yr if dyspareunia_11yr !=.
-	tab1 vaginal_delivery bmi_cat age_cat mat_degree cc_anxiety_bin epds_bin parity_bin pain_elsewhere_11yr if pain_elsewhere_11yr !=.
+	tab1 vaginal_delivery bmi_cat age_cat diabetes mat_degree cc_anxiety_bin epds_bin parity_bin dyspareunia_11yr if dyspareunia_11yr !=. & cc==1
+	tab1 vaginal_delivery bmi_cat age_cat diabetes mat_degree cc_anxiety_bin epds_bin parity_bin pain_elsewhere_11yr if pain_elsewhere_11yr !=. & cc==1
 
 * Supplementary table 4
 	
@@ -354,6 +354,8 @@
 		
 	}
 
+	**# got to here evening 16/05/22
+
 ***************************************************************************************************************************
 
 * To inform the rationale for multiple imputation, we wanted explore unobserved outcomes more thoroughly - in other words, compare the proportion of missing in those who had returned the questionnaire and the proportion of missing in other questions for returned questionnaires 
@@ -362,48 +364,49 @@
 
 * Supplementary table 5
 
-* Load in the complete cases dataset
+* Load in the supplementary dataset
 
-	use "$Projectdir/datafiles/flo_dataset_cc.dta", clear
+	use "$Projectdir/datafiles/supp_dataset.dta", clear
 
 * Missingness
 * Participants with missing outcome data
 
 		foreach var of varlist sexsat_33mo sexsat_5yr sexsat_12yr sexsat_18yr sexfreq_33mo sexfreq_5yr sexfreq_12yr sexfreq_18yr dyspareunia_11yr pain_elsewhere_11yr {
 		
-	count if `var' ==.
+	tab `var' if mi_cohort==1, m
+	count if `var' ==. & mi_cohort==1
 		
 	}
 	
 * Participants missing who returned the questionnaire 
 
-	count if sexsat_33mo ==. & h001 ==1
-	count if sexsat_5yr ==. & k0007a ==1
-	count if sexsat_12yr ==. & s0007a ==1
-	count if sexsat_18yr ==. & t0007a ==1
+	count if sexsat_33mo ==. & h001 ==1 & mi_cohort==1
+	count if sexsat_5yr ==. & k0007a ==1 & mi_cohort==1
+	count if sexsat_12yr ==. & s0007a ==1 & mi_cohort==1
+	count if sexsat_18yr ==. & t0007a ==1 & mi_cohort==1
 
-	count if sexfreq_33mo ==. & h001 ==1
-	count if sexfreq_5yr ==. & k0007a ==1
-	count if sexfreq_12yr ==. & s0007a ==1
-	count if sexfreq_18yr ==. & t0007a ==1
+	count if sexfreq_33mo ==. & h001 ==1 & mi_cohort==1
+	count if sexfreq_5yr ==. & k0007a ==1 & mi_cohort==1
+	count if sexfreq_12yr ==. & s0007a ==1 & mi_cohort==1
+	count if sexfreq_18yr ==. & t0007a ==1 & mi_cohort==1
 
-	count if dyspareunia_11yr ==. & r0007a ==1
-	count if pain_elsewhere_11yr ==. & r0007a ==1
+	count if dyspareunia_11yr ==. & r0007a ==1 & mi_cohort==1
+	count if pain_elsewhere_11yr ==. & r0007a ==1 & mi_cohort==1
 	
 * Participants missing who did not return the questionnaire 
 
-	count if sexsat_33mo ==. & h001 ==0
-	count if sexsat_5yr ==. & k0007a ==0
-	count if sexsat_12yr ==. & s0007a ==0
-	count if sexsat_18yr ==. & t0007a ==0
+	count if sexsat_33mo ==. & h001 ==0 & mi_cohort==1
+	count if sexsat_5yr ==. & k0007a ==0 & mi_cohort==1
+	count if sexsat_12yr ==. & s0007a ==0 & mi_cohort==1
+	count if sexsat_18yr ==. & t0007a ==0 & mi_cohort==1
 
-	count if sexfreq_33mo ==. & h001 ==0
-	count if sexfreq_5yr ==. & k0007a ==0
-	count if sexfreq_12yr ==. & s0007a ==0
-	count if sexfreq_18yr ==. & t0007a ==0
+	count if sexfreq_33mo ==. & h001 ==0 & mi_cohort==1
+	count if sexfreq_5yr ==. & k0007a ==0 & mi_cohort==1
+	count if sexfreq_12yr ==. & s0007a ==0 & mi_cohort==1
+	count if sexfreq_18yr ==. & t0007a ==0 & mi_cohort==1
 
-	count if dyspareunia_11yr ==. & r0007a ==0
-	count if pain_elsewhere_11yr ==. & r0007a ==0
+	count if dyspareunia_11yr ==. & r0007a ==0 & mi_cohort==1
+	count if pain_elsewhere_11yr ==. & r0007a ==0 & mi_cohort==1
 	
 ***************************************************************************************************************************
 	
@@ -411,30 +414,36 @@
 	
 * Within participants who returned the questionnaire, % that were missing for previous question, sex-related questions and random questions later in the questionnaire
 	
-	count if h_prev_miss ==. & h001==1
-	count if sexfreq_33mo ==. & h001 ==1
-	count if sexsat_33mo ==. & h001==1
-	count if h_rand_miss ==. & h001==1
+	count if h001==1 & mi_cohort==1
+	count if k0007a==1 & mi_cohort==1
+	count if r0007a==1 & mi_cohort==1
+	count if s0007a==1 & mi_cohort==1
+	count if t0007a==1 & mi_cohort==1
 	
-	count if k_prev_miss ==. & k0007a ==1
-	count if sexfreq_5yr ==. & k0007a ==1
-	count if sexsat_5yr ==. & k0007a ==1
-	count if k_rand_miss ==. & k0007a ==1
+	count if h_prev_miss ==. & h001==1 & mi_cohort==1
+	count if sexfreq_33mo ==. & h001 ==1 & mi_cohort==1
+	count if sexsat_33mo ==. & h001==1 & mi_cohort==1
+	count if h_rand_miss ==. & h001==1 & mi_cohort==1
 	
-	count if r_prev_miss ==. & r0007a ==1
-	count if dyspareunia_11yr ==. & r0007a ==1
-	count if pain_elsewhere_11yr ==. & r0007a ==1
-	count if r_rand_miss ==. & r0007a ==1
+	count if k_prev_miss ==. & k0007a ==1 & mi_cohort==1
+	count if sexfreq_5yr ==. & k0007a ==1 & mi_cohort==1
+	count if sexsat_5yr ==. & k0007a ==1 & mi_cohort==1
+	count if k_rand_miss ==. & k0007a ==1 & mi_cohort==1
 	
-	count if s_prev_miss ==. & s0007a ==1
-	count if sexfreq_12yr ==. & s0007a ==1
-	count if sexsat_12yr ==. & s0007a ==1
-	count if s_rand_miss ==. & s0007a ==1
+	count if r_prev_miss ==. & r0007a ==1 & mi_cohort==1
+	count if dyspareunia_11yr ==. & r0007a ==1 & mi_cohort==1
+	count if pain_elsewhere_11yr ==. & r0007a ==1 & mi_cohort==1
+	count if r_rand_miss ==. & r0007a ==1 & mi_cohort==1
 	
-	count if t_prev_miss ==. & t0007a ==1
-	count if sexfreq_18yr ==. & t0007a ==1
-	count if sexsat_18yr ==. & t0007a ==1
-	count if t_rand_miss ==. & t0007a ==1
+	count if s_prev_miss ==. & s0007a ==1 & mi_cohort==1
+	count if sexfreq_12yr ==. & s0007a ==1 & mi_cohort==1
+	count if sexsat_12yr ==. & s0007a ==1 & mi_cohort==1
+	count if s_rand_miss ==. & s0007a ==1 & mi_cohort==1
+	
+	count if t_prev_miss ==. & t0007a ==1 & mi_cohort==1
+	count if sexfreq_18yr ==. & t0007a ==1 & mi_cohort==1
+	count if sexsat_18yr ==. & t0007a ==1 & mi_cohort==1
+	count if t_rand_miss ==. & t0007a ==1 & mi_cohort==1
 	
 ***************************************************************************************************************************
 
@@ -444,7 +453,7 @@
 
 	use "$Datadir/mi_dataset.dta"
 	
-	count // n=13,299 (participants with complete x)
+	count // n=13,296 (participants with complete x)
 
 	foreach var of varlist sexsat_18yr sexfreq_33mo sexfreq_18yr dyspareunia_11yr pain_elsewhere_11yr {
 		
@@ -512,7 +521,7 @@
 		("(" + strofreal(exp(r(table)[5,1]),"%5.2f") + " to " + strofreal(exp(r(table)[6,1]),"%5.2f") + ")") ///
 		(strofreal(r(table)[4,1], "%4.3f")) 
 
-	mi estimate: ologit `outcome' `exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi 
+	mi estimate: ologit `outcome' `exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi diabetes
 	post `memhold' ("`outcome'") ("Adjusted") ///
 		(strofreal(exp(r(table)[1,1]), "%5.2f")) ///
 		("(" + strofreal(exp(r(table)[5,1]),"%5.2f") + " to " + strofreal(exp(r(table)[6,1]),"%5.2f") + ")") ///
@@ -665,7 +674,7 @@
 		("(" + strofreal(exp(r(table)[5,3]),"%5.2f") + " to " + strofreal(exp(r(table)[6,3]),"%5.2f") + ")") ///
 		(strofreal(r(table)[4,3], "%4.3f"))
 
-	mi estimate: ologit `outcome' i.`exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi
+	mi estimate: ologit `outcome' i.`exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi diabetes
 	post `memhold' (2) ("`outcome'") ("Adjusted") ///
 		(strofreal(exp(r(table)[1,2]), "%5.2f")) ///
 		("(" + strofreal(exp(r(table)[5,2]),"%5.2f") + " to " + strofreal(exp(r(table)[6,2]),"%5.2f") + ")") ///
@@ -816,7 +825,7 @@
 		("(" + strofreal(exp(r(table)[5,1]),"%5.2f") + " - " + strofreal(exp(r(table)[6,1]),"%5.2f") + ")") ///
 		(strofreal(r(table)[4,1]), "%4.3f")
 
-	mi estimate: ologit `outcome' `exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi 
+	mi estimate: ologit `outcome' `exposure' matage_delivery parity_18wkgest cc_anxiety_18wkgest epds_18wkgest i.mat_edu mat_bmi diabetes
 	post `memhold' (2) ("`outcome'") ("Adjusted") ///
 		(strofreal(exp(r(table)[1,1]), "%5.2f")) ///
 		("(" + strofreal(exp(r(table)[5,1]),"%5.2f") + " - " + strofreal(exp(r(table)[6,1]),"%5.2f") + ")") ///
